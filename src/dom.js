@@ -246,15 +246,22 @@ var _setCaretPosContentEditable = function (elem, position){
 
 
 
-var s = yam.dom.selection = {
+yam.dom.selection = function(){
   
+  
+}
+
+
+var s = yam.dom.selection
+  , sel = s.prototype
+
   /*
   *  get or set caret position in an input, textarea or contenteditable div
   *  @param {element / $element} elem The container with the cursor in - note, 
   *                             if the cursor is not in the container, behaviour is undefined
   *  @param {int} [pos] The position to set the caret.
   */ 
-  caretPos: function(elem, _pos){
+  s.caretPos= function(elem, _pos){
     if (_pos){
       return $(elem).is('input, textarea') ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
     }
@@ -264,7 +271,7 @@ var s = yam.dom.selection = {
   /*
   *  Get coords of caret
   */
-  , caretCoords: function(elem){
+  s.caretCoords= function(elem){
     s.storeSelections()
     
     $('.yj-ghost').remove();
@@ -281,7 +288,7 @@ var s = yam.dom.selection = {
   /*
   *  Careful! : range here is browser specific.
   */ 
-  , replaceRange: function(range, html){
+  s.replaceRange= function(range, html){
     if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
       var node = range.createContextualFragment(html);
       range.deleteContents();
@@ -292,7 +299,7 @@ var s = yam.dom.selection = {
   }
   
   
-  , replaceTextSubstr: function(startindex, endindex, html){
+  s.replaceTextSubstr= function(startindex, endindex, html){
     s.storeSelections();
     
     var range;
@@ -312,7 +319,7 @@ var s = yam.dom.selection = {
     s.restoreSelections();
   }
   
-  , moveCursorToEnd: function(elem){
+  s.moveCursorToEnd = function(elem){
     // Destroys selections...
     if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
       var range = document.createRange();       
@@ -331,14 +338,14 @@ var s = yam.dom.selection = {
   
   
   // TODO - store and restore window selections so other methods are not destructive
-  , storeSelections: function(){}
-  , restoreSelections: function(){}
+  s.storeSelections = function(){}
+  s.restoreSelections = function(){}
   
   
   /* 
   *  Underline a search term
   */
-  , underlineTerm : function($node, term, cls){
+  s.underlineTerm = function($node, term, cls){
       $node.find('.yj-underline').each(function(){
         $(this).replaceWith($(this).text());
       });
@@ -365,7 +372,4 @@ var s = yam.dom.selection = {
       })   
     }  
   
-}
-
-
 })
