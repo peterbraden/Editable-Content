@@ -255,121 +255,121 @@ yam.dom.selection = function(){
 var s = yam.dom.selection
   , sel = s.prototype
 
-  /*
-  *  get or set caret position in an input, textarea or contenteditable div
-  *  @param {element / $element} elem The container with the cursor in - note, 
-  *                             if the cursor is not in the container, behaviour is undefined
-  *  @param {int} [pos] The position to set the caret.
-  */ 
-  s.caretPos= function(elem, _pos){
-    if (_pos){
-      return $(elem).is('input, textarea') ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
-    }
-    return $(elem).is('input, textarea') ? _getCaretPosInput(elem) : _getCaretPosContentEditable(elem)
+/*
+*  get or set caret position in an input, textarea or contenteditable div
+*  @param {element / $element} elem The container with the cursor in - note, 
+*                             if the cursor is not in the container, behaviour is undefined
+*  @param {int} [pos] The position to set the caret.
+*/ 
+s.caretPos= function(elem, _pos){
+  if (_pos){
+    return $(elem).is('input, textarea') ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
+  }
+  return $(elem).is('input, textarea') ? _getCaretPosInput(elem) : _getCaretPosContentEditable(elem)
+}  
+
+/*
+*  Get coords of caret
+*/
+s.caretCoords= function(elem){
+  s.storeSelections()
+  
+  $('.yj-ghost').remove();
+  var phantom = "<span class='yj-ghost'>I</span>"
+  s.replaceTextSubstr(s.caretPos(), s.caretPos(), phantom)
+  var $phantom = $('.yj-ghost')
+  var pos = $phantom.position()
+  pos.height = $phantom.height() 
+  $phantom.remove()
+  
+  return pos
+}
+
+/*
+*  Careful! : range here is browser specific.
+*/ 
+s.replaceRange= function(range, html){
+  if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
+    var node = range.createContextualFragment(html);
+    range.deleteContents();
+    range.insertNode(node);
+  } else if (document.selection && document.selection.createRange) { // IE
+    range.pasteHTML(html)
   }  
-  
-  /*
-  *  Get coords of caret
-  */
-  s.caretCoords= function(elem){
-    s.storeSelections()
-    
-    $('.yj-ghost').remove();
-    var phantom = "<span class='yj-ghost'>I</span>"
-    s.replaceTextSubstr(s.caretPos(), s.caretPos(), phantom)
-    var $phantom = $('.yj-ghost')
-    var pos = $phantom.position()
-    pos.height = $phantom.height() 
-    $phantom.remove()
-    
-    return pos
-  }
-  
-  /*
-  *  Careful! : range here is browser specific.
-  */ 
-  s.replaceRange= function(range, html){
-    if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
-      var node = range.createContextualFragment(html);
-      range.deleteContents();
-      range.insertNode(node);
-    } else if (document.selection && document.selection.createRange) { // IE
-      range.pasteHTML(html)
-    }  
-  }
-  
-  
-  s.replaceTextSubstr= function(startindex, endindex, html){
-    s.storeSelections();
-    
-    var range;
-    
-    // Insert fragment - I bet DOJO has a method for this...
-    if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
-      var range = window.getSelection().getRangeAt(0);
-      range.setStart(range.startContainer, startindex)
-      range.setEnd(range.startContainer, endindex)
-    } else if (document.selection && document.selection.createRange) { // IE
-      var range = document.selection.createRange()
-      //TODO position
-    } 
-    
-    s.replaceRange(range, html) 
-    
-    s.restoreSelections();
-  }
-  
-  s.moveCursorToEnd = function(elem){
-    // Destroys selections...
-    if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
-      var range = document.createRange();       
-      range.selectNodeContents(elem);
-      range.collapse(false);          
-      window.getSelection().removeAllRanges();     
-      window.getSelection().addRange(range)   
-    } else if (document.selection && document.selection.createRange) { // IE   
-      // Thx http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
-      range = document.body.createTextRange();
-      range.moveToElementText(elem);
-      range.collapse(false);
-      range.select();
-    }         
-  }
-  
-  
-  // TODO - store and restore window selections so other methods are not destructive
-  s.storeSelections = function(){}
-  s.restoreSelections = function(){}
-  
-  
-  /* 
-  *  Underline a search term
-  */
-  s.underlineTerm = function($node, term, cls){
-      $node.find('.yj-underline').each(function(){
-        $(this).replaceWith($(this).text());
-      });
-      if (!term) return;
-      
-      var regex = new RegExp('(^|\\s)' + term, 'gi')
+}
 
-      $node.find(cls || 'span').each(function(){
-        var $this = $(this)
-           , text = $this.text()
-           , ind = text.search(regex);
 
-        if (ind > -1){
-          if (text.charAt(ind) == ' ')
-            ind ++
-          
-          $this.html("" + text.slice(0, ind) +
-            "<span class='yj-underline'>" + 
-            yam.escapeXML(text.slice(ind, ind+term.length)) + 
-            "</span>" + 
-            yam.escapeXML(text.slice(ind + term.length))
-          );
-        }
-      })   
-    }  
+s.replaceTextSubstr= function(startindex, endindex, html){
+  s.storeSelections();
   
+  var range;
+  
+  // Insert fragment - I bet DOJO has a method for this...
+  if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
+    var range = window.getSelection().getRangeAt(0);
+    range.setStart(range.startContainer, startindex)
+    range.setEnd(range.startContainer, endindex)
+  } else if (document.selection && document.selection.createRange) { // IE
+    var range = document.selection.createRange()
+    //TODO position
+  } 
+  
+  s.replaceRange(range, html) 
+  
+  s.restoreSelections();
+}
+
+s.moveCursorToEnd = function(elem){
+  // Destroys selections...
+  if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
+    var range = document.createRange();       
+    range.selectNodeContents(elem);
+    range.collapse(false);          
+    window.getSelection().removeAllRanges();     
+    window.getSelection().addRange(range)   
+  } else if (document.selection && document.selection.createRange) { // IE   
+    // Thx http://stackoverflow.com/questions/1125292/how-to-move-cursor-to-end-of-contenteditable-entity
+    range = document.body.createTextRange();
+    range.moveToElementText(elem);
+    range.collapse(false);
+    range.select();
+  }         
+}
+
+
+// TODO - store and restore window selections so other methods are not destructive
+s.storeSelections = function(){}
+s.restoreSelections = function(){}
+
+
+/* 
+*  Underline a search term
+*/
+s.underlineTerm = function($node, term, cls){
+    $node.find('.yj-underline').each(function(){
+      $(this).replaceWith($(this).text());
+    });
+    if (!term) return;
+    
+    var regex = new RegExp('(^|\\s)' + term, 'gi')
+
+    $node.find(cls || 'span').each(function(){
+      var $this = $(this)
+         , text = $this.text()
+         , ind = text.search(regex);
+
+      if (ind > -1){
+        if (text.charAt(ind) == ' ')
+          ind ++
+        
+        $this.html("" + text.slice(0, ind) +
+          "<span class='yj-underline'>" + 
+          yam.escapeXML(text.slice(ind, ind+term.length)) + 
+          "</span>" + 
+          yam.escapeXML(text.slice(ind + term.length))
+        );
+      }
+    })   
+  }  
+
 })
