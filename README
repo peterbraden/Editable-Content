@@ -1,0 +1,101 @@
+yam.dom
+yam.dom.selection
+yam.dom.keyboard
+yam.dom.range
+yam.Editor
+
+yam.ui.shared.EditorComponent
+yam.ui.shared.EditorMenu
+yam.ui.shared.MinimalEditorMenu
+yam.ui.shared.ExpandedEditorMenu
+
+
+== Execute commands
+- although browser Api is nasty, should continue to use commands to maintain parity with spec and ease imp.
+
+- wrap cmds to normalise xbrowser and remove goggles etc,
+- where possible avoid selection breaking undo (although typeahead selection reqs range, hmm. Regex?)
+
+- can we polyfill ie locally?
+
+
+
+Selection integration
+  - typeahead needs to be able to search around cursor
+    - replace a selection
+  - pages will need to execute commands on User selections
+
+Ed.getUserSelection
+Ed.getselection(ind, len)
+
+Selection cross browser wrap
+String like methods
+How to do indices across element boundaries?
+
+We cant assume single level dom- br in h1, eg.
+
+
+
+
+
+
+== Examples: ==
+
+Make a new editor and add to DOM:
+
+    var e = new Editor()
+    e.appendTo(".my_elem")
+ 
+Convert a textarea to an Editor:
+
+    var e = new Editor("#my_textarea")   
+
+Listen to events: (acts very similar to jquery object)
+   
+    e.bind({
+        'keyup' : myHandler
+      , 'change' : myHandler
+      , 'nodeChange': myHandler
+    })
+
+Get a normalised version of the editor's content:
+
+    var html = e.html() // Normalised
+      , text = e.val()
+      , also_text = e.text()
+   
+
+---- Rough ideas: ---   
+   
+Set the transform for normalisation:
+ 
+    e.transforms = function(){
+      return {
+      //   MODE  : HTML
+          'bold' : '<strong />'
+        , 'link' : '<span class="mock-link" />'
+        , 'italic' : function(text){return to_html(text)}
+      }
+    }
+
+Or:
+
+    e.normalize = function(html){
+      return my_normalize(html)
+    }
+
+
+// bubble publisher
+
+yam.ui.shared.typeAhead.registerField(ed.$, {
+  onSelect : function(res, ta){
+    var selection = ta.getSelection()
+    ed.replace(selection, Mustache.to_html(bubble_template, res))
+  })
+ 
+...
+
+typeahead.getSelection = function(){
+  return ed.getSelection(ed.cursorPos() -1 * triggerLength, len)
+} 
+  
