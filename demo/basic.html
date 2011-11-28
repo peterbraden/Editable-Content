@@ -22,11 +22,36 @@
 		<h1>Basic contenteditable sandbox</h1>
 	
 		<div id = "editor">The <span class='bubble'>quick</span> brown fox jumps over the lazy dog</div>
+			
+		<pre><code id = 'output'></code></pre>
 		
 		<script>
+			var outlineWithUnderscores = function(e){
+				return "_" + e.text() + "_";
+			}
+		
+		
 			$(function(){
 				var e = new yam.Editor('#editor')
-				console.log(e)
+
+				e.transformText({'.bubble': outlineWithUnderscores})
+
+				e.bind('keyup', function(){ // TODO -bind to 'change event'
+					console.log(e.val());
+					$("#output").text(e.val());
+
+					// replace text typed with underscores with bubble
+					var re = /\_([^\s]*)\_/gi
+					  , underscored
+					
+					while (underscored = re.exec(e.rawText() || '')){
+					  e.wrap(underscored.index, underscored.index + underscored[0].length, "<span class='bubble' />")						
+					}
+					
+
+				})
+				
+
 			})
 		
 		</script>

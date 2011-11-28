@@ -27,24 +27,25 @@ Get a normalised version of the editor's content:
       , also_text = e.text()
     
 
----- Rough ideas: ---    
-    
+
 Set the transform for normalisation:
   
-    e.transforms = function(){
-      return {
-      //   MODE  : HTML
+    e.transformText({
+      //   Selector  : HTML
           'bold' : '<strong />'
-        , 'link' : '<span class="mock-link" />'
-        , 'italic' : function(text){return to_html(text)}
+        , 'a' : '<span class="mock-link" />'
+        , '.my_class' : function(text){return to_html(text)}
       }
-    }
+    })
 
 Or: 
 
-    e.normalize = function(html){
+    e.normalizeText = function(html){
       return my_normalize(html)
     }
+
+---- Rough ideas: ---    
+
 
 
 // bubble publisher
@@ -72,6 +73,13 @@ typeahead.getSelection = function(){
 
 yam.define(['$', '_'], function($,_){
   
+  // Shorthand for browser sniffing
+  var in_webkit = $.browser.webkit
+    , in_ie = $.browser.ie
+    , in_mozilla = $.browser.mozilla
+    , in_opera = $.browser.opera
+  
+  
   /*
   * Constructor for editor
   */
@@ -91,7 +99,7 @@ yam.define(['$', '_'], function($,_){
   e.init = function(args){
     if (args.length > 0){
       // First arg is either a elem, jquery elem or selector
-      this.$elem = $(args[0])
+      this.$ = this.$elem = $(args[0])
       
     } else{
       throw "Not implemented 0 args yet"
@@ -100,15 +108,70 @@ yam.define(['$', '_'], function($,_){
     // Setup element
     this.$elem[0].contentEditable = "true"
     
+    this.textTransforms = {}
+    this.htmlTransforms = {}
+    
+  }
+  
+  e._normaliseBrowserText = function(e){
+    var $elem = $(e) // not this.$elem!!!
+    console.log("!!!", e)
+    
+    //TODO: Fun times!
+    if(in_webkit) 
+      $elem.find("div").replaceWith(function() { return "\n" + this.innerHTML; });    
+    if(in_ie) 
+      $elem.find("p").replaceWith(function() { return this.innerHTML  +  "<br>"; });
+    if(in_mozilla || in_opera ||in_ie )
+      $elem.find("br").replaceWith("\n");
+    
+    
+    return $elem.text()
+  }
+  
+  
+  /* Can be overridden
+  */
+  e.normalize = e.normalizeText = function(content){
+    return content
+  }
+  
+  e.normalizeHtml = function(){
+    throw "Unimplemented normalise html"
+  }
+  
+  /**
+  Add a selector : transform for text or val output
+  */
+  e.transform = e.transformText = function(transforms){
+    yam.mixin(this.textTransforms, transforms)
   }
   
   /*
   */
-  e.html = function(){}
+  e.html = function(){
+    throw "Unimplemented html"
+  }
   
   /*
   */
-  e.text = e.val = function(){}
+  e.text = e.val = function(){
+    var text = this.$.clone()    
+      , self = this    
+     
+    _.each(this.textTransforms, function(t, sel){
+      text.find(sel).each(function(){
+        $(this).replaceWith(t($(this)))
+      })        
+    })
+    
+    text = this.normalize(this._normaliseBrowserText(text))
+    return text
+  }
+  
+  e.rawText = function(){
+    return this.$.text.apply(this.$, arguments)
+  }
   
   /*
   */
@@ -118,6 +181,12 @@ yam.define(['$', '_'], function($,_){
   */
   e.bind = function(){
     return this.$.bind.apply(this.$, arguments)
+  }
+  
+  
+  e.wrap = function(startIndex, endIndex, elem){
+    console.log("Wrap", arguments)
+    
   }
   
   e.focus = function(){}
