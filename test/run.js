@@ -18,6 +18,6 @@ var browser = wd.remote(opts.host, opts.port, opts.username, opts.apikey)
 browser.init({browserName:"chrome"}, function() {
   browser.get(opts.url, function(){
     console.log("-- Browser Launched")
-    tests.run(browser, browser.quit)
+    tests.run(browser, function(){browser.close(browser.quit)})
   })
 });  
