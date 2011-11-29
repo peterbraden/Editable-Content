@@ -111,6 +111,45 @@ yam.define(['$', '_'], function($,_){
     this.textTransforms = {}
     this.htmlTransforms = {}
     
+    // Cache the value:
+    this._val = this.$.text()
+    
+    this._bindEvents()
+    
+  }
+  
+  e._bindEvents = function(){
+    this.$.bind({
+      'keydown' : $.proxy(this._onkeydown, this)
+    , 'keyup' :  $.proxy(this._onkeyup, this)
+    , 'keypress' : $.proxy(this._onkeypress, this)
+    , 'focus' : $.proxy(this._onfocus, this)
+    , 'blur' : $.proxy(this._onblur, this)
+    , 'paste' :  $.proxy(this._onpaste, this)
+    })    
+  }
+  
+  e._onkeydown = function(e){}
+  e._onkeyup = function(e){
+    e._checkChange()
+  }
+  
+  e._onkeypress = function(e){}
+  e._onfocus = function(e){}
+  e._onblur = function(e){
+    e._checkChange() 
+  }
+  e._onpaste = function(e){
+    e._checkChange()
+  }
+  
+  // Check if value has changed and if so fire change event
+  e.checkChange = function(){
+    var _val = this.$.text();
+    if (_val != this._val){
+      this._val = _val;
+      this.$.trigger('change');
+    }
   }
   
   e._normaliseBrowserText = function(e){

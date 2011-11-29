@@ -25,34 +25,36 @@
 		<pre><code id = 'output'></code></pre>
 		
 		<script>
-			var outlineWithUnderscores = function(e){
-				return "_" + e.text() + "_";
-			}
+var outlineWithUnderscores = function(e){
+	return "_" + e.text() + "_";
+}
+
+
+$(function(){
+	
+	e = window.Ed = new yam.Editor('#editor')
+	
+	// Text transforms - elements matching selector have callback applied
+	e.transformText({'.bubble': outlineWithUnderscores})
+
+	// Fire events
+	e.bind('change', function(){
 		
+		console.log(e.val());
+		$("#output").text(e.val());
+
+		// replace text typed with underscores with bubble
+		var re = /\_([^\s]*)\_/gi
+		  , underscored
 		
-			$(function(){
-				e = window.Ed = new yam.Editor('#editor')
+		while (underscored = re.exec(e.rawText() || '')){
+		  e.wrap(underscored.index, underscored.index + underscored[0].length, "<span class='bubble' />")						
+		}
+	})
+	
 
-				e.transformText({'.bubble': outlineWithUnderscores})
+})
 
-				e.bind('keyup', function(){ // TODO -bind to 'change event'
-					console.log(e.val());
-					$("#output").text(e.val());
-
-					// replace text typed with underscores with bubble
-					var re = /\_([^\s]*)\_/gi
-					  , underscored
-					
-					while (underscored = re.exec(e.rawText() || '')){
-					  e.wrap(underscored.index, underscored.index + underscored[0].length, "<span class='bubble' />")						
-					}
-					
-
-				})
-				
-
-			})
-		
 		</script>
 			
 	</body>

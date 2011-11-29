@@ -1,6 +1,6 @@
 var wd = require('wd')
-  , tests = require('./all')
-
+  , tests = require('./suite')
+  , basic = require('./basic')
   
 // Set up Command line options
 var opts = require('nomnom')
