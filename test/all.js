@@ -31,8 +31,22 @@ exports.run = function(browser, cb){
 
 exports.test("Testing page loaded jquery", function(browser, cb){
   browser.exec("window.$.fn.jquery", function(o){
-    var data = JSON.parse(o)
-    assert.equal(data.value,'1.4.2')
+    assert.equal(o,'1.4.2')
     cb();
   })
 })
+
+exports.test("Testing page loaded yam.Editor", function(browser, cb){
+  browser.exec("typeof window.yam.Editor", function(o){
+    assert.equal(o,'function')
+    cb();
+  })
+})
+
+exports.test("yam.Editor initial value", function(browser, cb){
+  browser.exec("yam.Ed.$.text()", function(o){
+    assert.equal(o,'The quick brown fox jumps over the lazy dog')
+    cb();
+  })
+})
+
