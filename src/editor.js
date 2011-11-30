@@ -228,7 +228,10 @@ yam.define(['$', '_'], function($,_){
     
   }
   
-  e.focus = function(){}
+  e.focus = function(){
+    this.$.focus()
+  }
+  
   e.append = function(){}
   
 })

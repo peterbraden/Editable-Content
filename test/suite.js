@@ -4,23 +4,31 @@ var sys = require('sys')
 var tests = []
  
 exports.runTest= function(t, browser, cb){
+  var err = function(e){
+   sys.print('E')
+   console.log("\n Error: ", t[1], ">>> ", e.name, e.message)
+   console.trace();
+   cb()
+  }
+  
   try{
-    t(browser, cb);
+    t[0](browser, cb, err);
     sys.print('.')
   } catch(e){
     sys.print('E')
-    console.log(t.name, e)
+    err(e)
   } 
+  
 }
   
 exports.test= function(name, t){
   t.name = name
-  tests.push(t);
+  tests.push([t, name]);
 }
   
 exports.run = function(browser, cb){
   if (tests.length){
-    exports.runTest(tests.pop(), browser, function(){exports.run(browser, cb)})
+    exports.runTest(tests.shift(), browser, function(){exports.run(browser, cb)})
   } else { 
     console.log("DONE")
     cb()
