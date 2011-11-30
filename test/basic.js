@@ -47,8 +47,8 @@ suite.test("yam.Editor initial value .val()", function(browser, cb){
 // Focus on field
 suite.test("yam.Editor focus", function(browser, cb){
   browser.eval("window.Ed.focus()", function(e, o){
-    browser.active(function(){
-      console.log("!!!", arguments)
+    browser.active(function(e, o){
+      console.log("!!!", o)
       // What to test?
       cb();
     })

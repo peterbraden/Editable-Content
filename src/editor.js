@@ -107,6 +107,7 @@ yam.define(['$', '_'], function($,_){
     
     // Setup element
     this.$elem[0].contentEditable = "true"
+    this.$elem.attr('tabindex', this.$elem.attr('tabindex') || 0) //tabindex needed so it can be focused
     
     this.textTransforms = {}
     this.htmlTransforms = {}
@@ -229,7 +230,7 @@ yam.define(['$', '_'], function($,_){
   }
   
   e.focus = function(){
-    this.$.focus()
+    this.$.contents().focus()
   }
   
   e.append = function(){}
