@@ -162,8 +162,7 @@ yam.define(['$', '_'], function($,_){
     if(in_ie) 
       $elem.find("p").replaceWith(function() { return this.innerHTML  +  "<br>"; });
     if(in_mozilla || in_opera ||in_ie )
-      $elem.find("br").replaceWith("\n");
-    
+      $elem.find("br").replaceWith("\\n");
     
     return $elem.text()
   }

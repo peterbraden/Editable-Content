@@ -30,7 +30,7 @@ suite.test("yam.Editor initial value", function(browser, cb, e){
 
 // Editor should parse bubble with transform to _quick_
 suite.test("yam.Editor initial value .text()", function(browser, cb, e){
-  browser.eval("window.Ed.text()", c(e, function(e,o){
+  browser.eval("window.Ed.text();", c(e, function(e,o){
     assert.equal(e, null);
     assert.equal(o,'The _quick_ brown fox jumps over the lazy dog')
     cb();
