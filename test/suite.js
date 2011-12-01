@@ -6,8 +6,7 @@ var tests = []
 exports.runTest= function(t, browser, cb){
   var err = function(e){
    sys.print('E')
-   console.log("\n Error: ", t[1], ">>> ", e.name, e.message)
-   console.trace();
+   console.log("\n Error: ", t[1], ">>> ", e.name, e.message, '\n', e.stack)
    cb()
   }
   
@@ -24,6 +23,17 @@ exports.runTest= function(t, browser, cb){
 exports.test= function(name, t){
   t.name = name
   tests.push([t, name]);
+}
+
+//wrapp callbacks in error handling
+exports.callback = function(err, cb){
+  return function(){
+    try{
+      cb.apply(this, arguments)
+    } catch (e){
+      err(e)
+    }
+  }  
 }
   
 exports.run = function(browser, cb){

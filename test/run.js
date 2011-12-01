@@ -12,10 +12,13 @@ var opts = require('nomnom')
   .parse()
 
 // Setup webdriver
-var browser = wd.remote(opts.host, opts.port, opts.username, opts.apikey)
+if (opts.username)
+  var browser = wd.remote(opts.host, opts.port, opts.username, opts.apikey)
+else 
+  var browser = wd.remote(opts.host, opts.port)
 
 
-browser.init({browserName:"chrome"}, function() {
+browser.init({browserName:"firefox"}, function() {
   browser.get(opts.url, function(){
     console.log("-- Browser Launched")
     tests.run(browser, function(){browser.close(function(){browser.quit()})})

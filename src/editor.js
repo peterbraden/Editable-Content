@@ -155,7 +155,6 @@ yam.define(['$', '_'], function($,_){
   
   e._normaliseBrowserText = function(e){
     var $elem = $(e) // not this.$elem!!!
-    console.log("!!!", e)
     
     //TODO: Fun times!
     if(in_webkit) 
@@ -225,7 +224,7 @@ yam.define(['$', '_'], function($,_){
   
   
   e.wrap = function(startIndex, endIndex, elem){
-    console.log("Wrap", arguments)
+    //console.log("Wrap", arguments)
     
   }
   

@@ -41,9 +41,7 @@ $(function(){
 	e.bind('change', function(){
 		
 		window._tests_changeFired = true // for unit tests
-		
-		console.log(e.val());
-		$("#output").text(e.val());
+ 		$("#output").text(e.val());
 
 		// replace text typed with underscores with bubble
 		var re = /\_([^\s]*)\_/gi
