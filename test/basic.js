@@ -76,13 +76,15 @@ suite.test("Range method", function(browser, cb, e){
 // Focus on field
 suite.test("yam.Editor focus", function(browser, cb, e){
   browser.eval("window.Ed.focus()", c(e, function(er,o){
-    browser.active(c(e, function(e, o){
+    //browser.active(c(e, function(e, o){
       //assert.equal(o, editor_id, "Editor id :" + editor_id + ", active: " + o);
       // Not necessarily div active, could be child element ^
       cb();
-    }))
+    //}))
   }))
 })
+
+
 
 // Type 's'
 suite.test("yam.Editor type 's'", function(browser, cb, e){
@@ -116,7 +118,9 @@ suite.test("New value after typing", function(browser, cb, e){
 
 // new value/text
 suite.test("Wrap 'fox' in bubble", function(browser, cb, e){
-  browser.eval("window.Ed.wrap(16, 19, '<span class=\"bubble\" />').trigger('paste).text()", c(e, function(e,o){
+  browser.eval("window.Ed.wrap(16, 19, '<span class="+'"bubble"' + "' />').trigger('paste).text()", c(e, function(e,o){
+    if (e)
+      throw e
     assert.equal(o,'The _quick_ brown _fox_ jumps over the lazy dogs')
     cb();
   }))
@@ -125,8 +129,7 @@ suite.test("Wrap 'fox' in bubble", function(browser, cb, e){
 // Caret Pos
 suite.test("caret is at end", function(browser, cb, e){
   browser.eval("window.Ed.focus().caretPos()", c(e, function(e,o){
-    console.log(o)
-    //assert.equal(o,'The _quick_ brown _fox_ jumps over the lazy dogs')
+    assert.equal(o,44)
     cb();
   }))
 })

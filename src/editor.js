@@ -237,7 +237,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
   e.caretPos = function(val){
-    yam.dom.selection.caretPos(this.$, val)
+    return yam.dom.selection.caretPos(this.$[0], val)
   }
   
   e.focus = function(){

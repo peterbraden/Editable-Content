@@ -9,6 +9,7 @@ var opts = require('nomnom')
   .option('port', {default:80})
   .option('host', {default:"ondemand.saucelabs.com"})
   .option('url', {default: "http://peterbraden.co.uk/sandbox/Editable-Content/demo/basic.html"})
+  .option('browser', {default:"firefox"})
   .parse()
 
 // Setup webdriver
@@ -18,7 +19,7 @@ else
   var browser = wd.remote(opts.host, opts.port)
 
 
-browser.init({browserName:"firefox"}, function() {
+browser.init({browserName:opts.browser}, function() {
   browser.get(opts.url, function(){
     console.log("-- Browser Launched")
     tests.run(browser, function(){browser.close(function(){browser.quit()})})
