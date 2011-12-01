@@ -285,36 +285,100 @@ var _getCaretPosInput = function(elem){
 */
 var _getCaretPosContentEditable = function (elem) {
   elem = elem instanceof jQuery ? elem[0] : elem; //_not_ jquery
-  
   if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
-    
     /*
-    *  Because the caret position is from the start of the element, and we're in a sub element,
+    *  Because the caret position is from the start of the element, and may be in a sub element,
     *  what we do is create a selection from the beginning of the element to the end, then look 
-    *  at it's content's jquery text length which will include child elements.
+    *  at it's contents jquery text length which will include child elements.
     */
-    
     var sel = window.getSelection().getRangeAt(0);
     sel.setEnd(sel.startContainer, sel.startOffset)
-    sel.setStart(elem || sel.startContainer, 0)
+    
+    // this little ninja bit of jquery means that we are setting the start of the range to 
+    // the first child of the contenteditable, which is usually a text node
+    var sc = sel.startContainer
+    sc = (sc.nodeType == 3) ? sc.parentNode : sc // Make sure sc is not text node
+    sel.setStart($(sc).parents().add(sc).filter('[contenteditable="true"], [contenteditable="plaintext-only"]')[0].firstChild, 0) 
     var range = sel.cloneContents()
+    
     return $(range).text().length 
-  
-  } // TODO else IE
-  
-
+  } else if (document.selection) { // IE
+      /*
+      * This took a looong time to work out.
+      * Basically, we copy the range, expand it to the contenteditable element,
+      * then calculate offsets from the difference.
+      * IE Sux.
+      */
+    
+      var range = document.selection.createRange()
+        , elemr = range.duplicate()
+        , par =  $(elem).parents().add(elem).filter('[contenteditable="true"], [contenteditable="plaintext-only"]')
+      
+      range.collapse(true)  
+      elemr.moveToElementText(par[0]);    	
+      elemr.setEndPoint('EndToStart', range);        
+      return elemr.text.length;
+      
+  } else {
+    throw "Aaaaargh, not in a known browser. CaretPos not implemented"
+  }
 };
 
 
+// Traverse down over an element to text leaves, calling cb on each in order
+// We could use a treewalker, but this should work in IE as well
+var _traverseToTextNodes = function(elem, cb){
+  if (elem.nodeType == 1){ // Element 
+    if (elem.hasChildNodes()){
+      var c = elem.childNodes
+      for (var i = 0; i<c.length; i++){
+        _traverseToTextNodes(c[i], cb)
+      }
+    }
+  } else if (elem.nodeType == 3){ // Text
+    cb(elem)
+  }   
+}
+
+
+
 var _setCaretPosContentEditable = function (elem, position){
-   if (typeof elem.setSelectionRange == 'function') { // Good Browsers
-    elem.setSelectionRange(position, position);
-  } else if (typeof elem.createTextRange == 'function') { // IE
-    var range = elem.createTextRange();
-    range.move('character', position);
-    range.select();
+  if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
+    var called = false;
+
+    // Element here needs to be text node:
+    _traverseToTextNodes(elem, function(e){
+      if (called) return;
+      
+      if (position <= e.data.length){ // if position is in this textnode
+        var range = document.createRange();
+        range.setStart(e, position)
+        range.setEnd(e, position)
+        
+        window.getSelection().removeAllRanges();     
+        window.getSelection().addRange(range)
+        called = true;
+      } else {
+        // position is not in this elem - decrement position by this length
+        position-=e.data.length
+      }          
+    })     
+          
+    if (!called){
+      throw "yam.selection index error - not called"
+    }      
+
+    
+  } else if (document.selection && document.selection.createRange) { // IE   
+      range = document.body.createTextRange();
+      range.moveToElementText(elem);
+      range.collapse(true);
+      range.moveEnd('character', position);
+      range.moveStart('character', position);
+      range.select();
   }
 }
+
 
 
 

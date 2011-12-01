@@ -38,6 +38,12 @@ $(function(){
 	// Text transforms - elements matching selector have callback applied
 	e.transformText({'.bubble': outlineWithUnderscores})
 
+	e.bind('keyup', function(){
+		
+		console.log("!!!", e.caretPos())
+		
+	})
+
 	// Fire events
 	e.bind('change', function(){
 		

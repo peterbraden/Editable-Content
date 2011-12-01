@@ -232,7 +232,10 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
   e.wrap = function(startInd, endInd, elem){
+    var cp = this.caretPos()
     this.range(startInd, endInd).wrap(elem)
+    console.log("!!!>", cp)
+    this.caretPos(cp) // if the bubble replaces user selection, the caret jumps to the beginning
     return this
   }
   
