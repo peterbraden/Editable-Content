@@ -218,13 +218,26 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   /*
   */
   e.bind = function(){
-    return this.$.bind.apply(this.$, arguments)
+    this.$.bind.apply(this.$, arguments)
+    return this
   }
   
+  e.trigger = function(){
+    this.$.trigger.apply(this.$, arguments)
+    return this
+  }
   
-  e.wrap = function(startIndex, endIndex, elem){
-    //console.log("Wrap", arguments)
-    
+  e.range = function(startInd, endInd){
+    return dom.range(this.$[0], startInd, endInd)
+  }
+  
+  e.wrap = function(startInd, endInd, elem){
+    this.range(startInd, endInd).wrap(elem)
+    return this
+  }
+  
+  e.caretPos = function(val){
+    yam.dom.selection.caretPos(this.$, val)
   }
   
   e.focus = function(){

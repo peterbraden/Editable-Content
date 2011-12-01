@@ -59,6 +59,20 @@ suite.test("yam.Editor initial value .val()", function(browser, cb, e){
 })
 
 
+suite.test("Range method", function(browser, cb, e){
+    browser.eval("window.Ed.range(1, 6).toString()",c(e, function(e,o){
+      assert.equal(o,'he qu')
+      cb();
+    }))
+  })
+
+
+
+
+
+
+// ==== Mutate field ========
+
 // Focus on field
 suite.test("yam.Editor focus", function(browser, cb, e){
   browser.eval("window.Ed.focus()", c(e, function(er,o){
@@ -99,5 +113,23 @@ suite.test("New value after typing", function(browser, cb, e){
     cb();
   }))
 })
+
+// new value/text
+suite.test("Wrap 'fox' in bubble", function(browser, cb, e){
+  browser.eval("window.Ed.wrap(16, 19, '<span class=\"bubble\" />').trigger('paste).text()", c(e, function(e,o){
+    assert.equal(o,'The _quick_ brown _fox_ jumps over the lazy dogs')
+    cb();
+  }))
+})
+
+// Caret Pos
+suite.test("caret is at end", function(browser, cb, e){
+  browser.eval("window.Ed.focus().caretPos()", c(e, function(e,o){
+    console.log(o)
+    //assert.equal(o,'The _quick_ brown _fox_ jumps over the lazy dogs')
+    cb();
+  }))
+})
+
 
 

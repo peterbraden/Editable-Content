@@ -162,8 +162,80 @@ Tools for working with selections and ranges, including getting caret positions 
 https://developer.mozilla.org/en/DOM/range
 http://www.quirksmode.org/dom/range_intro.html
 
-
 */
+
+
+var eachText = function(elem, cb){ 
+  $(elem).contents().each(function(){
+    if (this.nodeType == 3) // Text
+      cb(this)
+    else if (this.nodeType == 1) // Element
+      eachText(this, cb)
+  })
+}
+
+
+yam.dom.Range = function(elem, start, end){
+  var $elem = $(elem)
+    , _text = $elem.text()
+    , self = this
+    , startset = endset = false
+  
+  // Sanity Checking
+  if (_text.length < end)
+    throw "Range end exceeds element length"
+  if (_text.length < end)
+    throw "Range start exceeds element length"    
+  
+  
+  if (document.createRange) {  // Modern Browsers
+    
+    this.raw = document.createRange();
+    // Descend into nodes to find actual start
+    var i = 0;
+    eachText(elem, function(text){
+      var len = text.nodeValue.length
+      if (i + len > start && !startset){
+        self.raw.setStart(text, start-i);
+        startset=true;
+      }  
+      if (i + len > end && !endset){
+        self.raw.setEnd(text, end-i);
+        endset=true;
+      }  
+      i += len
+    })
+    
+  } else {
+    // TODO IE 9-
+  }  
+  
+  
+}
+
+
+yam.dom.range = function(elem, start, end){
+  return new yam.dom.Range(elem, start, end)
+} 
+  
+var r = yam.dom.Range
+  
+r.prototype.toString = function(){ //TODO - just use toString?
+  var contents = this.raw.cloneContents()
+  return $(contents).text()
+}  
+
+r.prototype.wrap = function(elem){
+  // We don't attempt to solve the problem of partial selection, in
+  // that case a Range exception will be thrown.
+  this.raw.surroundContents($(elem)[0])
+}
+
+
+
+
+
+
  /**
 *  Internal
 */
