@@ -2,6 +2,8 @@ var suite = require('./suite')
   , assert = require('assert')
   , c = suite.callback
 
+  , editor_id
+
 // Assume we are on basic.html (TODO force)
 
 //Sanity
@@ -16,6 +18,17 @@ suite.test("Testing page loaded jquery", function(browser, cb, e){
 suite.test("Testing page loaded yam.Editor", function(browser, cb, e){
   browser.eval("typeof window.yam.Editor", c(e, function(e,o){
     assert.equal(o,'function')
+    cb();
+  }))
+})
+
+
+//Sanity
+suite.test("Testing editor element", function(browser, cb, e){
+  browser.element("id", "editor", c(e, function(e,o){
+    //store global:
+    editor_id = o
+    
     cb();
   }))
 })
@@ -48,18 +61,19 @@ suite.test("yam.Editor initial value .val()", function(browser, cb, e){
 
 // Focus on field
 suite.test("yam.Editor focus", function(browser, cb, e){
-  browser.eval("window.Ed.focus()", c(e, function(e,o){
-    browser.active(function(e, o){
-      console.log("!!!", o)
-      // What to test?
+  browser.eval("window.Ed.focus()", c(e, function(er,o){
+    browser.active(c(e, function(e, o){
+      //assert.equal(o, editor_id, "Editor id :" + editor_id + ", active: " + o);
+      // Not necessarily div active, could be child element ^
       cb();
-    })
+    }))
   }))
 })
 
-// Type 'a'
+// Type 's'
 suite.test("yam.Editor type 's'", function(browser, cb, e){
-  browser.type("editor", ["s"], function(e){
+  browser.type(editor_id, ["s"], function(e){
+    console.log("!!!", e)
     cb();
   })
 })

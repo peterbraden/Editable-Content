@@ -71,7 +71,7 @@ typeahead.getSelection = function(){
     
 */
 
-yam.define(['$', '_'], function($,_){
+yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   
   // Shorthand for browser sniffing
   var in_webkit = $.browser.webkit
@@ -132,20 +132,20 @@ yam.define(['$', '_'], function($,_){
   
   e._onkeydown = function(e){}
   e._onkeyup = function(e){
-    e._checkChange()
+    this._checkChange()
   }
   
   e._onkeypress = function(e){}
   e._onfocus = function(e){}
   e._onblur = function(e){
-    e._checkChange() 
+    this._checkChange() 
   }
   e._onpaste = function(e){
-    e._checkChange()
+    this._checkChange()
   }
   
   // Check if value has changed and if so fire change event
-  e.checkChange = function(){
+  e._checkChange = function(){
     var _val = this.$.text();
     if (_val != this._val){
       this._val = _val;
@@ -228,7 +228,8 @@ yam.define(['$', '_'], function($,_){
   }
   
   e.focus = function(){
-    this.$.contents().focus()
+    dom.selection.moveCursorToEnd(this.$[0])
+    return this
   }
   
   e.append = function(){}
