@@ -48,7 +48,6 @@ $(function(){
 	e.bind('change', function(){
 		
 		window._tests_changeFired = true // for unit tests
- 		$("#output").text(e.val());
 
 		// replace text typed with underscores with bubble
 		var re = /\_([^\s]*)\_/gi
@@ -57,6 +56,15 @@ $(function(){
 		while (underscored = re.exec(e.rawText() || '')){
 		  e.wrap(underscored.index, underscored.index + underscored[0].length, "<span class='bubble' />")						
 		}
+		
+		// Check bubble are still underscored, else unwrap:
+		e.find('.bubble').each(function(){
+			if (!$(this).text().match(re))
+			  e.unwrap(this)
+		})
+		
+		
+		$("#output").text(e.val());
 	})
 	
 })

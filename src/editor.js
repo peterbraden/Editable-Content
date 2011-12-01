@@ -227,6 +227,10 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     return this
   }
   
+  e.find = function(){
+    return this.$.find.apply(this.$, arguments)
+  }
+  
   e.range = function(startInd, endInd){
     return dom.range(this.$[0], startInd, endInd)
   }
@@ -237,6 +241,11 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     console.log("!!!>", cp)
     this.caretPos(cp) // if the bubble replaces user selection, the caret jumps to the beginning
     return this
+  }
+  
+  e.unwrap = function(elem){
+    $(elem).replaceWith($(elem).text())
+    return this;
   }
   
   e.caretPos = function(val){
