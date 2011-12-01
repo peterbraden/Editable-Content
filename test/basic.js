@@ -73,7 +73,6 @@ suite.test("yam.Editor focus", function(browser, cb, e){
 // Type 's'
 suite.test("yam.Editor type 's'", function(browser, cb, e){
   browser.type(editor_id, ["s"], function(e){
-    console.log("!!!", e)
     cb();
   })
 })
