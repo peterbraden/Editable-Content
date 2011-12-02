@@ -25,6 +25,7 @@
 			
 		<pre><code id = 'output'></code></pre>
 		
+		<a href = "#" id = "bubble">Bubble</a>
 		
 		<script>
 var outlineWithUnderscores = function(e){
@@ -66,6 +67,10 @@ $(function(){
 		
 		
 		$("#output").text(e.val());
+	})
+	
+	$("#bubble").click(function(){
+		e.wrap(e.selection(), "<span class='bubble' />")
 	})
 	
 })

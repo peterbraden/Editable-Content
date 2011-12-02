@@ -175,21 +175,44 @@ var eachText = function(elem, cb){
 }
 
 
-yam.dom.Range = function(elem, start, end){
-  var $elem = $(elem)
-    , _text = $elem.text()
-    , self = this
-    , startset = endset = false
+yam.dom.Range = function(){
+  switch (arguments.length){
+    case 1:
+      this._initRaw(arguments[0])
+      break;
+    
+    case 3:
+      this._initFromIndices.apply(this, arguments)
+      break;
+      
+    default:
+      throw "wrong arguments for new Range"  
+  }
+}
+
+
+yam.dom.range = function(elem, start, end){
+  return new yam.dom.Range(elem, start, end)
+} 
+ 
   
+var r = yam.dom.Range
+
+r.prototype._initFromIndices = function(elem, start, end){
+  var $elem = $(elem)
+  , _text = $elem.text()
+  , self = this
+  , startset = endset = false
+
   // Sanity Checking
   if (_text.length < end)
     throw "Range end exceeds element length"
   if (_text.length < end)
     throw "Range start exceeds element length"    
-  
-  
+
+
   if (document.createRange) {  // Modern Browsers
-    
+  
     this.raw = document.createRange();
     // Descend into nodes to find actual start
     var i = 0;
@@ -205,20 +228,15 @@ yam.dom.Range = function(elem, start, end){
       }  
       i += len
     })
-    
+  
   } else {
     // TODO IE 9-
-  }  
-  
-  
+  }
+}  
+
+r.prototype._initRaw = function(raw){
+  this.raw = raw
 }
-
-
-yam.dom.range = function(elem, start, end){
-  return new yam.dom.Range(elem, start, end)
-} 
-  
-var r = yam.dom.Range
   
 r.prototype.toString = function(){ //TODO - just use toString?
   var contents = this.raw.cloneContents()
@@ -231,6 +249,9 @@ r.prototype.wrap = function(elem){
   this.raw.surroundContents($(elem)[0])
 }
 
+r.prototype.inside = function(elem){
+  return !!$(elem).has(this.raw.commonAncesterContainer)
+}
 
 
 
@@ -380,16 +401,20 @@ var _setCaretPosContentEditable = function (elem, position){
 }
 
 
-
-
 yam.dom.selection = function(){
-  
-  
+  if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
+    return new yam.dom.Range(window.getSelection().getRangeAt(0));
+  } else if (document.selection && document.selection.createRange) { // IE
+    return new yam.dom.Range(document.selection.createRange());
+  } else {
+    throw "Unknown browser - not sure how to get user selection"
+  }
 }
 
-
 var s = yam.dom.selection
-  , sel = s.prototype
+
+
+
 
 /*
 *  get or set caret position in an input, textarea or contenteditable div

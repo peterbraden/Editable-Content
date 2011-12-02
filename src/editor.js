@@ -235,9 +235,25 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     return dom.range(this.$[0], startInd, endInd)
   }
   
-  e.wrap = function(startInd, endInd, elem){
+  
+  /*
+  Usage:
+  e.wrap(startInd, endInd, elem)
+  e.wrap(selectionObj, elem)
+  */
+  e.wrap = function(){
+    var range, elem;
+    
+    if (arguments.length == 2){
+      range = arguments[0];
+      elem = arguments[1];
+    } else {
+      elem = arguments[2];
+      range = this.range(arguments[0], arguments[1])
+    }
+
     var cp = this.caretPos()
-    this.range(startInd, endInd).wrap(elem)
+    range.wrap(elem)
     this.caretPos(cp) // if the bubble replaces user selection, the caret jumps to the beginning
     return this
   }
@@ -251,6 +267,13 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   
   e.caretPos = function(val){
     return yam.dom.selection.caretPos(this.$[0], val)
+  }
+  
+  e.selection = function(){
+    var sel = dom.selection();
+    if (sel && sel.inside(this.$)){
+      return sel
+    }
   }
   
   e.focus = function(){
