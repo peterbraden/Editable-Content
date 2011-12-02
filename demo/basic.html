@@ -14,6 +14,7 @@
 		body{font-family:helvetica, sans-serif; width:600px; margin:0 auto;}
 		#editor{border:1px solid #99f; padding:5px; min-height:200px;}
 		.bubble{background-color:#fbb; border-radius:5px;}
+		.italic{font-style:oblique;}
 		</style>
 		
 	</head>
@@ -40,7 +41,7 @@ $(function(){
 
 	e.bind('keyup', function(){
 		
-		console.log("!!!", e.caretPos())
+		console.log("!!!", e.caretPos(), e)
 		
 	})
 
@@ -54,11 +55,11 @@ $(function(){
 		  , underscored
 		
 		while (underscored = re.exec(e.rawText() || '')){
-		  e.wrap(underscored.index, underscored.index + underscored[0].length, "<span class='bubble' />")						
+		  e.wrap(underscored.index, underscored.index + underscored[0].length, "<span class='italic' />")						
 		}
 		
 		// Check bubble are still underscored, else unwrap:
-		e.find('.bubble').each(function(){
+		e.find('.italic').each(function(){
 			if (!$(this).text().match(re))
 			  e.unwrap(this)
 		})
