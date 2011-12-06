@@ -1,0 +1,74 @@
+<!doctype html> 
+	<head>
+		<meta charset="utf-8">  
+		<script src="../src/jquery-1.4.2.js"></script>
+		<script src="../src/underscore.js"></script>
+		
+		<script>yam.$ = $</script>
+		
+		<script src="../src/core.js"></script>
+		<script src="../src/dom.js"></script>
+		<script src="../src/editor.js"></script>
+		<script src="../src/rich-editor-menu.js"></script>
+		
+		
+		
+		<style>
+		body{font-family:helvetica, sans-serif; width:600px; margin:0 auto;}
+		#editor{border:1px solid #99f; padding:5px; min-height:200px;}
+		.bubble{background-color:#fbb; border-radius:5px;}
+		.italic{font-style:oblique;}
+
+.yj-rich-editor-menu{
+	background-color:#f0f0ee;
+	border:1px solid #ccc;
+	
+}		
+
+.yj-rich-editor-capability{
+	width:40px;
+	overflow:hidden;
+	padding:5px;
+}
+		
+		</style>
+		
+	</head>
+	<body>
+		<h1>Rich Text Example</h1>
+	
+		<div id = "editor">The quick brown fox jumps over the lazy dog</div>
+			
+		<pre><code id = 'output'></code></pre>
+		
+
+		<script>
+
+$(function(){
+	
+	var e = window.Ed = new yam.Editor('#editor');
+	var menu = window.Menu = new yam.RichEditorMenu(e);
+	
+	var outlineWith = function(before, after){
+		return function(el){
+			return before + el.text() + after;
+		}
+	}
+	
+	e.transformText({'b': outlineWith("*", "*")})
+	e.transformText({'i': outlineWith("_", "_")})
+	e.transformText({'li': outlineWith("-", "<br /")})
+	
+	
+	e.bind('change', function(){
+		$("#output").text(e.val())
+		console.log("!!", e.val())
+	})
+	
+	
+})
+
+		</script>
+			
+	</body>
+</html>

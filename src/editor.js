@@ -82,21 +82,25 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   
   /*
   * Constructor for editor
+  *
+  * Takes:
+  *  @param {Selector/Element/jQuery Object}
   */
   yam.Editor = function(){
     if (!this instanceof yam.Editor){ // If someone forgets 'new' fix their mistake
       var ed = new yam.Editor()
-      ed.init(arguments);
+      ed._init(arguments);
       return ed
     }
-    this.init(arguments);
+    this._init(arguments);
   } 
   var e = yam.Editor.prototype;
   
   
   /**
+  * Internal
   */
-  e.init = function(args){
+  e._init = function(args){
     if (args.length > 0){
       // First arg is either a elem, jquery elem or selector
       this.$ = this.$elem = $(args[0])
@@ -119,6 +123,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     
   }
   
+  // Internal
   e._bindEvents = function(){
     this.$.bind({
       'keydown' : $.proxy(this._onkeydown, this)
@@ -130,6 +135,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     })    
   }
   
+  // Internal
   e._onkeydown = function(e){}
   e._onkeyup = function(e){
     this._checkChange()
@@ -282,5 +288,21 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
   e.append = function(){}
+  
+  // similar to browsers execCommand
+  e.execCommand = function(command, showUI, value){
+    // if this.isActive()
+    // if thisbrowser supports command
+    document.execCommand(command, showUI, value); // TODO check!
+    // else if we have fallback, use wrap
+    this.trigger('change')
+  }
+  
+
+  e.width = function(){return this.$.width.apply(this.$, arguments)}
+  e.outerWidth = function(){return this.$.outerWidth.apply(this.$, arguments)}
+  e.height = function(){return this.$.height.apply(this.$, arguments)}
+  e.outerHeight = function(){return this.$.outerHeight.apply(this.$, arguments)}
+  
   
 })
