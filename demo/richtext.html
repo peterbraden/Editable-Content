@@ -58,6 +58,9 @@ $(function(){
 	e.transformText({'b': outlineWith("*", "*")})
 	e.transformText({'i': outlineWith("_", "_")})
 	e.transformText({'li': outlineWith("-", "<br /")})
+	e.transformText({'a': function(el){
+		return "[" + el.text() + "](" + el.attr('href') + ")" 
+	}})
 	
 	
 	e.bind('change', function(){

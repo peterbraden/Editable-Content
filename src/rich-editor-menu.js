@@ -19,7 +19,9 @@ capabilities.insertunorderedlist = function(editor){
  editor.execCommand('insertunorderedlist') 
 }
 
-//['bold', 'italic', 'ol', 'ul', 'link', 'unlink'] 
+capabilities.createlink = function(editor){
+ editor.execCommand('createlink', undefined, 'http://google.com') 
+}
 
 var defaults = {
   capabilities : capabilities
