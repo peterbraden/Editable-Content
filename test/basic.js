@@ -4,7 +4,10 @@ var suite = require('./suite')
 
   , editor_id
 
-// Assume we are on basic.html (TODO force)
+//setup
+suite.test("Loading page", function(browser, cb, e){
+  browser.get(suite.base + '/basic.html', cb)
+})
 
 //Sanity
 suite.test("Testing page loaded jquery", function(browser, cb, e){

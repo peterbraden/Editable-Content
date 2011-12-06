@@ -36,9 +36,11 @@ exports.callback = function(err, cb){
   }  
 }
   
-exports.run = function(browser, cb){
+exports.run = function(browser, url, cb){
+  exports.base = url;
+  
   if (tests.length){
-    exports.runTest(tests.shift(), browser, function(){exports.run(browser, cb)})
+    exports.runTest(tests.shift(), browser, function(){exports.run(browser, url, cb)})
   } else { 
     console.log("DONE")
     cb()
