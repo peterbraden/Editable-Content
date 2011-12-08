@@ -196,6 +196,9 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     return $elem
   }
   
+  e._normalizeBrowserHTML = function(e){
+    return this._normaliseBrowserTextBefore(e) // TODO
+  }
   
   /* Can be overridden
   */
@@ -217,7 +220,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   /*
   */
   e.html = function(){
-    throw "Unimplemented html"
+    return this.$.html()//this._normalizeBrowserHTML(this.$.contents().clone())
   }
   
   /*

@@ -1,24 +1,48 @@
 var sys = require('sys')
+  , colors = require('colors')
 
+
+bcolors = {
+    firefox : 'red'
+  , iexplore : 'blue'
+  , googlechrome : 'yellow'
+}
 
 var tests = []
+
+var _tbs = []
+exports.traceback = function(){
+  if (exports.breakImmediately)
+    console.log(Array.prototype.join.apply(arguments, [' ']))
+  else 
+    _tbs.push(Array.prototype.join.apply(arguments, [' ']))
+}
  
 exports.runTest= function(t, browser, cb){
+  var bname = browser.desiredCapabilities.browserName
+    , bcol = bcolors[bname] || 'green'
+  
+  
   var err = function(e){
-   sys.print('E')
-   console.log("\n Error: ", t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 200))
+   sys.print(('E')[bcol])
+   exports.traceback("\n [" + bname[bcol] + "] Error: "
+      , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 250))
    cb()
   }
   
   try{
     t[0](browser, cb, err);
-    sys.print('.')
+    sys.print(('.')[bcol])
   } catch(e){
-    sys.print('E')
+    sys.print(('E')[bcol])
     err(e)
   } 
   
 }
+  
+exports.report = function(){
+  console.log(_tbs.join('\n\n'))
+}  
   
 exports.test= function(name, t){
   t.name = name
@@ -36,13 +60,21 @@ exports.callback = function(err, cb){
   }  
 }
   
-exports.run = function(browser, url, cb){
+exports.run = function(browser, url, cb, i){
+  var bname = browser.desiredCapabilities.browserName
+     , bcol = bcolors[bname] || 'green'
+
   exports.base = url;
+    
+  if (!i)
+    sys.print((">")[bcol])
   
-  if (tests.length){
-    exports.runTest(tests.shift(), browser, function(){exports.run(browser, url, cb)})
+  i = i || 0;
+  
+  if (i<tests.length){
+    exports.runTest(tests[i], browser, function(){exports.run(browser, url, cb, i+1)})
   } else { 
-    console.log("DONE")
+    sys.print(("*")[bcol])
     cb()
   }  
 }

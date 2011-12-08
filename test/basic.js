@@ -6,7 +6,6 @@ var suite = require('./suite')
 
 //setup
 suite.test("Loading page", function(browser, cb, e){
-  console.log(suite.base +  '/basic.html')
   browser.get(suite.base + '/basic.html', cb)
 })
 
@@ -62,13 +61,13 @@ suite.test("yam.Editor initial value .val()", function(browser, cb, e){
   }))
 })
 
-/*
+
 suite.test("yam.Editor initial value .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The <span class='bubble'>quick</span> brown fox jumps over the lazy dog")
+    assert.equal(o,'The <span class="bubble">quick</span> brown fox jumps over the lazy dog')
     cb();
   }))
-})*/
+})
 
 
 suite.test("Range method", function(browser, cb, e){
@@ -144,6 +143,14 @@ suite.test("Wrap 'fox' in bubble", function(browser, cb, e){
     if (e){}
       //throw e
     assert.equal(o,'The _quick_ brown _fox_ jumps over the lazy dogs')
+    cb();
+  }))
+})
+
+
+suite.test("fox in bubble .html()", function(browser, cb, e){
+  browser.eval("window.Ed.html()",c(e, function(e,o){
+    assert.equal(o,'The <span class="bubble">quick</span> brown <span class="bubble">fox</span> jumps over the lazy dogs')
     cb();
   }))
 })

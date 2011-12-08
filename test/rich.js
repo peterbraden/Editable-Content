@@ -58,6 +58,14 @@ suite.test("Bold selection", function(browser, cb, e){
   }))
 })  
 
+suite.test("bold 'quick' .html()", function(browser, cb, e){
+  browser.eval("window.Ed.html()",c(e, function(e,o){
+    assert.equal(o,"The <b>quick</b> brown fox jumps over the lazy dog")
+    cb();
+  }))
+})
+
+
 suite.test("unbold selection", function(browser, cb, e){
   browser.eval("window.Ed.execCommand('bold');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
@@ -66,6 +74,14 @@ suite.test("unbold selection", function(browser, cb, e){
       }))    
   }))
 })
+
+suite.test("unbold 'quick' .html()", function(browser, cb, e){
+  browser.eval("window.Ed.html()",c(e, function(e,o){
+    assert.equal(o,"The quick brown fox jumps over the lazy dog")
+    cb();
+  }))
+})
+
 
 
 //=== Italic 'fox' ===
@@ -86,6 +102,13 @@ suite.test("italicise selection", function(browser, cb, e){
   }))
 })  
 
+suite.test("italic 'fox' .html()", function(browser, cb, e){
+  browser.eval("window.Ed.html()",c(e, function(e,o){
+    assert.equal(o,"The quick brown <i>fox</i> jumps over the lazy dog")
+    cb();
+  }))
+})
+
 suite.test("unitalic selection", function(browser, cb, e){
   browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
@@ -95,5 +118,67 @@ suite.test("unitalic selection", function(browser, cb, e){
   }))
 })
 
+suite.test("unitalic 'fox' .html()", function(browser, cb, e){
+  browser.eval("window.Ed.html()",c(e, function(e,o){
+    assert.equal(o,"The quick brown fox jumps over the lazy dog")
+    cb();
+  }))
+})
 
 
+// Bold, Italic Jumps
+suite.test("Select 'jumps'", function(browser, cb, e){
+  browser.eval("window.Ed.focus().range(20, 25).select().toString()", c(e, function(e,o){
+    assert.equal(o, 'jumps')
+    cb();
+  }))
+})
+
+suite.test("italicise selection 'jumps'", function(browser, cb, e){
+  browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
+    browser.eval("$('#output').text()" ,c(e, function(er,o){
+        assert.equal(o,'The quick brown fox _jumps_ over the lazy dog')
+        cb();
+      }))    
+  }))
+})
+
+suite.test("bold selection 'jumps'", function(browser, cb, e){
+  browser.eval("window.Ed.execCommand('bold');",c(e, function(er,o){
+    browser.eval("$('#output').text()" ,c(e, function(er,o){
+        assert.equal(o,'The quick brown fox *_jumps_* over the lazy dog')
+        cb();
+      }))    
+  }))
+})
+
+
+suite.test("bold italic 'jumps' .html()", function(browser, cb, e){
+  browser.eval("window.Ed.html()",c(e, function(e,o){
+    assert.equal(o,"The quick brown fox <b><i>jumps</i></b> over the lazy dog")
+    cb();
+  }))
+})
+
+// Change to "Jumped"
+
+suite.test('select "s"', function(browser, cb, e){
+  browser.eval("window.Ed.range(24,25).select().toString();",c(e, function(e,o){
+    assert.equal(o,"s")
+    cb();
+  }))
+})
+    
+
+suite.test("yam.Editor type 'ed'", function(browser, cb, e){
+  browser.type(editor_id, ["e", "d"], function(e){
+    cb();
+  })
+})
+
+suite.test("'jumped' value", function(browser, cb, e){
+  browser.eval("$('#output').text()" ,c(e, function(er,o){
+      assert.equal(o,'The quick brown fox *_jumped_* over the lazy dog')
+      cb();
+  }))
+})

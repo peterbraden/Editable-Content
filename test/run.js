@@ -12,11 +12,22 @@ var opts = require('nomnom')
   .option('host', {default:"ondemand.saucelabs.com"})
   .option('url', {default: "http://peterbraden.co.uk/sandbox/Editable-Content/demo"})
   .option('browser', {default:"firefox@4"})
+  .option('breakImmediately', {default:false})
   .parse()
 
+var running = 0
+
+var done = function(){
+  if (running>1) {
+    running -=1;
+  } else {
+    tests.report();
+  }
+}
 
 
 _.each(opts.browser.split(','), function(x){
+  running +=1;
   
   // Setup webdriver
   if (opts.username)
@@ -28,12 +39,16 @@ _.each(opts.browser.split(','), function(x){
   
   var s = x.split('@')
     , b = s[0]
-    , v = s[1]
+    , v = (s.length > 1) ? s[1] : undefined
+  
+  tests.breakImmediately = opts.breakImmediately
   
   browser.init({browserName:b}, function() {
     browser.get(opts.url, function(){
-      console.log("-- Browser Launched")
-      tests.run(browser, opts.url, function(){browser.close(function(){browser.quit()})})
+      tests.run(browser, opts.url, function(){browser.close(function(){
+        done();
+        browser.quit()
+      })})
     })
   });  
   
