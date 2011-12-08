@@ -36,6 +36,7 @@ var outlineWithUnderscores = function(e){
 $(function(){
 	
 	e = window.Ed = new yam.Editor('#editor')
+	window.yam = yam // For tests
 	
 	// Text transforms - elements matching selector have callback applied
 	e.transformText({'.bubble': outlineWithUnderscores})

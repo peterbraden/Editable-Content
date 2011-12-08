@@ -159,18 +159,36 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     }
   }
   
-  e._normaliseBrowserText = function(e){
+  
+  e._normaliseBrowserTextAfter = function(e){
+    return e.text()
+  }
+  
+  e._normaliseBrowserTextBefore = function(e){
     var $elem = $(e) // not this.$elem!!!
     
     //TODO: Fun times!
+    
+    // New Lines
     if(in_webkit) 
       $elem.find("div").replaceWith(function() { return "\n" + this.innerHTML; });    
     if(in_ie) 
       $elem.find("p").replaceWith(function() { return this.innerHTML  +  "<br>"; });
     if(in_mozilla || in_opera ||in_ie )
       $elem.find("br").replaceWith("\\n");
+
     
-    return $elem.text()
+
+    if(in_mozilla)
+      $elem.find('span').each(function(){
+        // Bold
+        if (this.style.cssText == "font-weight: bold;"){
+          $(this).replaceWith("<b>" + this.innerHTML + "</b>")
+        }
+      })
+    
+    
+    return $elem
   }
   
   
@@ -200,8 +218,9 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   /*
   */
   e.text = e.val = function(){
-    var text = this.$.clone()    
+    var text = this._normaliseBrowserTextBefore(this.$.clone())
       , self = this    
+        
      
     _.each(this.textTransforms, function(t, sel){
       text.find(sel).each(function(){
@@ -209,7 +228,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
       })        
     })
     
-    text = this.normalize(this._normaliseBrowserText(text))
+    text = this.normalize(this._normaliseBrowserTextAfter(text))
     return text
   }
   

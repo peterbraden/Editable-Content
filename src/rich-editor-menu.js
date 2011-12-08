@@ -20,7 +20,8 @@ capabilities.insertunorderedlist = function(editor){
 }
 
 capabilities.createlink = function(editor){
- editor.execCommand('createlink', undefined, 'http://google.com') 
+  
+ editor.execCommand('createlink', undefined, prompt("Enter the url to link to", 'http://yammer.com')) 
 }
 
 var defaults = {

@@ -253,6 +253,22 @@ r.prototype.inside = function(elem){
   return !!$(elem).has(this.raw.commonAncesterContainer)
 }
 
+// Set range as user selection
+r.prototype.select = function(){
+  // http://stackoverflow.com/questions/4183401/can-you-set-and-or-change-the-users-text-selection-in-javascript
+  if (window.getSelection && document.createRange) {
+    var sel = window.getSelection()
+    sel.removeAllRanges();
+    sel.addRange(this.raw);
+  } else if (document.selection && document.body.createTextRange) {
+    this.raw.select();
+  }
+
+  
+  return this;
+}
+
+
 
 
 

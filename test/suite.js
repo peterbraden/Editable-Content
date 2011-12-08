@@ -6,7 +6,7 @@ var tests = []
 exports.runTest= function(t, browser, cb){
   var err = function(e){
    sys.print('E')
-   console.log("\n Error: ", t[1], ">>> ", e.name, e.message, '\n', e.stack)
+   console.log("\n Error: ", t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 200))
    cb()
   }
   
