@@ -185,6 +185,11 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
         if (this.style.cssText == "font-weight: bold;"){
           $(this).replaceWith("<b>" + this.innerHTML + "</b>")
         }
+        // Italic
+        if (this.style.cssText == "font-style: italic;"){
+          $(this).replaceWith("<i>" + this.innerHTML + "</i>")
+        }
+        
       })
     
     

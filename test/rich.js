@@ -66,3 +66,34 @@ suite.test("unbold selection", function(browser, cb, e){
       }))    
   }))
 })
+
+
+//=== Italic 'fox' ===
+
+suite.test("Select 'fox'", function(browser, cb, e){
+  browser.eval("window.Ed.focus().range(16, 19).select().toString()", c(e, function(e,o){
+    assert.equal(o, 'fox')
+    cb();
+  }))
+})
+
+suite.test("italicise selection", function(browser, cb, e){
+  browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
+    browser.eval("$('#output').text()" ,c(e, function(er,o){
+        assert.equal(o,'The quick brown _fox_ jumps over the lazy dog')
+        cb();
+      }))    
+  }))
+})  
+
+suite.test("unitalic selection", function(browser, cb, e){
+  browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
+    browser.eval("$('#output').text()" ,c(e, function(er,o){
+        assert.equal(o,'The quick brown fox jumps over the lazy dog')
+        cb();
+      }))    
+  }))
+})
+
+
+
