@@ -243,7 +243,7 @@ r.prototype._initRaw = function(raw){
 }
   
 r.prototype.toString = function(){
-  return this.raw.toString()
+  return this.raw.toString ? this.raw.toString() : this.raw.text
 }  
 
 r.prototype.wrap = function(elem){
