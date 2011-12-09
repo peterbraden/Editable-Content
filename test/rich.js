@@ -50,7 +50,7 @@ suite.test("Select 'quick'", function(browser, cb, e){
 })
 
 suite.test("Bold selection", function(browser, cb, e){
-  browser.eval("window.Ed.execCommand('bold');",c(e, function(er,o){
+  browser.execute("window.Ed.execCommand('bold');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
         assert.equal(o,'The *quick* brown fox jumps over the lazy dog')
         cb();
@@ -60,14 +60,14 @@ suite.test("Bold selection", function(browser, cb, e){
 
 suite.test("bold 'quick' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The <b>quick</b> brown fox jumps over the lazy dog")
+    assert.equal(o,"The <strong>quick</strong> brown fox jumps over the lazy dog")
     cb();
   }))
 })
 
 
 suite.test("unbold selection", function(browser, cb, e){
-  browser.eval("window.Ed.execCommand('bold');",c(e, function(er,o){
+  browser.execute("window.Ed.execCommand('bold');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
         assert.equal(o,'The quick brown fox jumps over the lazy dog')
         cb();
@@ -94,7 +94,7 @@ suite.test("Select 'fox'", function(browser, cb, e){
 })
 
 suite.test("italicise selection", function(browser, cb, e){
-  browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
+  browser.execute("window.Ed.execCommand('italic');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
         assert.equal(o,'The quick brown _fox_ jumps over the lazy dog')
         cb();
@@ -104,13 +104,13 @@ suite.test("italicise selection", function(browser, cb, e){
 
 suite.test("italic 'fox' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown <i>fox</i> jumps over the lazy dog")
+    assert.equal(o,"The quick brown <em>fox</em> jumps over the lazy dog")
     cb();
   }))
 })
 
 suite.test("unitalic selection", function(browser, cb, e){
-  browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
+  browser.execute("window.Ed.execCommand('italic');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
         assert.equal(o,'The quick brown fox jumps over the lazy dog')
         cb();
@@ -135,7 +135,7 @@ suite.test("Select 'jumps'", function(browser, cb, e){
 })
 
 suite.test("italicise selection 'jumps'", function(browser, cb, e){
-  browser.eval("window.Ed.execCommand('italic');",c(e, function(er,o){
+  browser.execute("window.Ed.execCommand('italic');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
         assert.equal(o,'The quick brown fox _jumps_ over the lazy dog')
         cb();
@@ -144,7 +144,7 @@ suite.test("italicise selection 'jumps'", function(browser, cb, e){
 })
 
 suite.test("bold selection 'jumps'", function(browser, cb, e){
-  browser.eval("window.Ed.execCommand('bold');",c(e, function(er,o){
+  browser.execute("window.Ed.execCommand('bold');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
         assert.equal(o,'The quick brown fox *_jumps_* over the lazy dog')
         cb();
@@ -155,7 +155,7 @@ suite.test("bold selection 'jumps'", function(browser, cb, e){
 
 suite.test("bold italic 'jumps' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown fox <b><i>jumps</i></b> over the lazy dog")
+    assert.equal(o,"The quick brown fox <strong><em>jumps</em></strong> over the lazy dog")
     cb();
   }))
 })

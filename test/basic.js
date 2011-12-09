@@ -90,12 +90,9 @@ suite.test("temp", function(browser, cb, e){
   }))
 })
 
-/* // No idea why this is so slow. TODO
 // Focus on field
 suite.test("yam.Editor focus", function(browser, cb, e){
-  console.log("*")
-  browser.eval("window.Ed.focus()", c(e, function(er,o){
-    console.log("*")
+  browser.execute("window.Ed.focus()", c(e, function(er,o){
     //browser.active(c(e, function(e, o){
       //assert.equal(o, editor_id, "Editor id :" + editor_id + ", active: " + o);
       // Not necessarily div active, could be child element ^
@@ -103,7 +100,6 @@ suite.test("yam.Editor focus", function(browser, cb, e){
     //}))
   }))
 })
-*/
 
 
 

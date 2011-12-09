@@ -159,12 +159,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     }
   }
   
-  
-  e._normaliseBrowserTextAfter = function(e){
-    return e.text()
-  }
-  
-  e._normaliseBrowserTextBefore = function(e){
+  e._normaliseText = function(e){
     var $elem = $(e) // not this.$elem!!!
     
     //TODO: Fun times!
@@ -179,25 +174,40 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
 
     
 
-    if(in_mozilla)
-      $elem.find('span').each(function(){
-        // Bold
-        if (this.style.cssText == "font-weight: bold;"){
-          $(this).replaceWith("<b>" + this.innerHTML + "</b>")
-        }
-        // Italic
-        if (this.style.cssText == "font-style: italic;"){
-          $(this).replaceWith("<i>" + this.innerHTML + "</i>")
-        }
-        
-      })
-    
     
     return $elem
   }
   
-  e._normalizeBrowserHTML = function(e){
-    return this._normaliseBrowserTextBefore(e) // TODO
+  var replaceTag = function(elem, tag){
+    return $(elem).replaceWith($("<" + tag + ">" + elem.innerHTML + "</" + tag + ">"))
+  }
+  
+  e._normalizeHTML = function(){
+    var $elem = this.$.clone()
+    
+    if(in_webkit){
+      $elem.find('b').each(function(){replaceTag(this, 'strong')})
+      $elem.find('i').each(function(){replaceTag(this, 'em')})
+    }
+  
+    if(in_mozilla)
+      $elem.find('span').each(function(){
+        // Bold
+        if (this.style.cssText == "font-weight: bold;"){
+          replaceTag(this, 'strong')
+        }
+        // Italic
+        if (this.style.cssText == "font-style: italic;"){
+          replaceTag(this, 'em')
+        }
+        // Bold Italic
+        if (this.style.cssText == "font-style: italic; font-weight: bold;"){
+          replaceTag($(this).wrap('<strong />')[0], 'em')
+        }   
+        
+      })
+  
+    return $elem
   }
   
   /* Can be overridden
@@ -206,8 +216,8 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     return content
   }
   
-  e.normalizeHtml = function(){
-    throw "Unimplemented normalise html"
+  e.normalizeHtml = function(content){
+    return content
   }
   
   /**
@@ -220,24 +230,23 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   /*
   */
   e.html = function(){
-    return this.$.html()//this._normalizeBrowserHTML(this.$.contents().clone())
+    return this._normalizeHTML().html()
   }
   
   /*
   */
   e.text = e.val = function(){
-    var text = this._normaliseBrowserTextBefore(this.$.clone())
+    var text = this._normaliseText(this._normalizeHTML())
       , self = this    
-        
-     
+             
     _.each(this.textTransforms, function(t, sel){
       text.find(sel).each(function(){
         $(this).replaceWith(t($(this)))
       })        
     })
     
-    text = this.normalize(this._normaliseBrowserTextAfter(text))
-    return text
+    text = this.normalize(text)
+    return text.text()
   }
   
   e.rawText = function(){
@@ -318,7 +327,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   
   // similar to browsers execCommand
   e.execCommand = function(command, showUI, value){
-    // if this.isActive()
+    // if this.isActive()  
     // if thisbrowser supports command
     document.execCommand(command, showUI, value); // TODO check!
     // else if we have fallback, use wrap
