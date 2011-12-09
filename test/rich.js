@@ -146,7 +146,7 @@ suite.test("italicise selection 'jumps'", function(browser, cb, e){
 suite.test("bold selection 'jumps'", function(browser, cb, e){
   browser.execute("window.Ed.execCommand('bold');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
-        assert.equal(o,'The quick brown fox *_jumps_* over the lazy dog')
+        assert.equal(o,'The quick brown fox _*jumps*_ over the lazy dog')
         cb();
       }))    
   }))
@@ -155,7 +155,7 @@ suite.test("bold selection 'jumps'", function(browser, cb, e){
 
 suite.test("bold italic 'jumps' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown fox <strong><em>jumps</em></strong> over the lazy dog")
+    assert.equal(o,"The quick brown fox <em><strong>jumps</strong></em> over the lazy dog")
     cb();
   }))
 })
@@ -178,7 +178,7 @@ suite.test("yam.Editor type 'ed'", function(browser, cb, e){
 
 suite.test("'jumped' value", function(browser, cb, e){
   browser.eval("$('#output').text()" ,c(e, function(er,o){
-      assert.equal(o,'The quick brown fox *_jumped_* over the lazy dog')
+      assert.equal(o,'The quick brown fox _*jumped*_ over the lazy dog')
       cb();
   }))
 })

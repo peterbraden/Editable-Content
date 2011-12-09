@@ -202,7 +202,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
         }
         // Bold Italic
         if (this.style.cssText == "font-style: italic; font-weight: bold;"){
-          replaceTag($(this).wrap('<strong />')[0], 'em')
+          replaceTag($(this).wrap('<em />')[0], 'strong')
         }   
         
       })
