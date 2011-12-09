@@ -70,6 +70,13 @@ suite.test("yam.Editor initial value .html()", function(browser, cb, e){
 })
 
 
+suite.test("Dom range sanity (1)", function(browser, cb, e){
+    browser.execute("new yam.dom.Range(Window.Ed.$[0], 1, 6).toString()",c(e, function(e,o){
+      cb();
+    }))
+  })
+
+
 
 suite.test("Dom range sanity", function(browser, cb, e){
     browser.execute("new yam.dom.Range(Window.Ed.$[0], 1, 6)",c(e, function(e,o){

@@ -230,10 +230,10 @@ r.prototype._initFromIndices = function(elem, start, end){
     })
   
   } else if (document.selection && document.selection.createRange) { // IE
-    var range = document.selection.createRange().duplicate()
-    range.moveToElementText(elem);
-    range.moveEnd('character', start);
-    range.moveStart('character', end);
+    this.raw = document.selection.createRange().duplicate()
+    this.raw.moveToElementText(elem);
+    this.raw.moveEnd('character', start);
+    this.raw.moveStart('character', end);
   }
     
   
