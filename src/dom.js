@@ -230,7 +230,8 @@ r.prototype._initFromIndices = function(elem, start, end){
     })
   
   } else if (document.selection && document.selection.createRange) { // IE
-    var range = document.selection.createRange()
+    var range = document.selection.createRange().duplicate()
+    range.moveToElementText(elem);
     range.moveEnd('character', start);
     range.moveStart('character', end);
   }
@@ -243,7 +244,7 @@ r.prototype._initRaw = function(raw){
 }
   
 r.prototype.toString = function(){
-  return this.raw.toString ? this.raw.toString() : this.raw.text
+  return document.createRange ? this.raw.toString() : this.raw.text
 }  
 
 r.prototype.wrap = function(elem){

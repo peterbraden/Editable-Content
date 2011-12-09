@@ -1,9 +1,11 @@
 var wd = require('wd')
   , _ = require('underscore')
   , tests = require('./suite')
+  
   , basic = require('./basic')
   , rich = require('./rich')
-  
+   // , scratch = require('./scratchpad')
+    
 // Set up Command line options
 var opts = require('nomnom')
   .option('username', {})  

@@ -277,7 +277,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
   e.range = function(startInd, endInd){
-    return dom.range(this.$[0], startInd, endInd)
+    return new dom.Range(this.$[0], startInd, endInd)
   }
   
   
