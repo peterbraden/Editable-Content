@@ -238,9 +238,8 @@ r.prototype._initRaw = function(raw){
   this.raw = raw
 }
   
-r.prototype.toString = function(){ //TODO - just use toString?
-  var contents = this.raw.cloneContents()
-  return $(contents).text()
+r.prototype.toString = function(){
+  return this.raw.toString()
 }  
 
 r.prototype.wrap = function(elem){

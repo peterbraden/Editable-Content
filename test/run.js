@@ -43,7 +43,7 @@ _.each(opts.browser.split(','), function(x){
   
   tests.breakImmediately = opts.breakImmediately
   
-  browser.init({browserName:b}, function() {
+  browser.init({browserName:b, version:v, platform: (v==9)?'VISTA':"XP"}, function() {
     browser.get(opts.url, function(){
       tests.run(browser, opts.url, function(){browser.close(function(){
         done();

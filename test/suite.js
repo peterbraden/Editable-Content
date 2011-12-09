@@ -21,11 +21,12 @@ exports.traceback = function(){
 exports.runTest= function(t, browser, cb){
   var bname = browser.desiredCapabilities.browserName
     , bcol = bcolors[bname] || 'green'
+    , bversion = browser.desiredCapabilities.version
   
   
   var err = function(e){
    sys.print(('E')[bcol])
-   exports.traceback("\n [" + bname[bcol] + "] Error: "
+   exports.traceback("\n [" + bname[bcol] + bversion + "] Error: "
       , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 250))
    cb()
   }
