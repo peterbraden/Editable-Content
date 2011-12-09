@@ -232,8 +232,9 @@ r.prototype._initFromIndices = function(elem, start, end){
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
-    this.raw.moveEnd('character', start);
-    this.raw.moveStart('character', end);
+	this.raw.collapse(true);
+    this.raw.moveStart('character', start);
+    this.raw.moveEnd('character', end - start);
   }
     
   
@@ -248,9 +249,14 @@ r.prototype.toString = function(){
 }  
 
 r.prototype.wrap = function(elem){
-  // We don't attempt to solve the problem of partial selection, in
-  // that case a Range exception will be thrown.
-  this.raw.surroundContents($(elem)[0])
+  if (document.createRange){
+    // We don't attempt to solve the problem of partial selection, in
+    // that case a Range exception will be thrown.
+    this.raw.surroundContents($(elem)[0])
+  } else if (document.selection){ //IE8-
+    var frag = $(elem).append(this.raw.htmlText + "")
+    this.raw.pasteHTML(frag[0].outerHTML)
+  }	  
 }
 
 r.prototype.inside = function(elem){
