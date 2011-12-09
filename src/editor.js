@@ -113,8 +113,8 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     this.$elem[0].contentEditable = "true"
     this.$elem.attr('tabindex', this.$elem.attr('tabindex') || 0) //tabindex needed so it can be focused
     
-    this.textTransforms = {}
-    this.htmlTransforms = {}
+    this.textTransforms = []
+    this.htmlTransforms = []
     
     // Cache the value:
     this._val = this.$.text()
@@ -224,7 +224,10 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   Add a selector : transform for text or val output
   */
   e.transform = e.transformText = function(transforms){
-    yam.mixin(this.textTransforms, transforms)
+   var self = this
+    _.each(transforms, function(v,k){
+      self.textTransforms.push([k, v])
+    })
   }
   
   /*
@@ -239,9 +242,9 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     var text = this._normaliseText(this._normalizeHTML())
       , self = this    
              
-    _.each(this.textTransforms, function(t, sel){
-      text.find(sel).each(function(){
-        $(this).replaceWith(t($(this)))
+    _.each(this.textTransforms, function(t){
+      text.find(t[0]).each(function(){
+        $(this).replaceWith(t[1]($(this)))
       })        
     })
     
