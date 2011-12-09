@@ -64,7 +64,7 @@ suite.test("yam.Editor initial value .val()", function(browser, cb, e){
 
 suite.test("yam.Editor initial value .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,'The <span class="bubble">quick</span> brown fox jumps over the lazy dog')
+    assert.equal(o.toLowerCase().replace(/"/g, ''),'the <span class=bubble">quick</span> brown fox jumps over the lazy dog')
     cb();
   }))
 })

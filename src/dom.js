@@ -229,9 +229,13 @@ r.prototype._initFromIndices = function(elem, start, end){
       i += len
     })
   
-  } else {
-    // TODO IE 9-
+  } else if (document.selection && document.selection.createRange) { // IE
+    var range = document.selection.createRange()
+    range.moveEnd('character', start);
+    range.moveStart('character', end);
   }
+    
+  
 }  
 
 r.prototype._initRaw = function(raw){
