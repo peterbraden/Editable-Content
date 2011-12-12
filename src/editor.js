@@ -1,70 +1,7 @@
 /*
 == Editable Content ==
 
-== Examples: ==
-
-Make a new editor and add to DOM:
-
-    var e = new Editor()
-    e.appendTo(".my_elem")
-  
-Convert a textarea to an Editor:
-
-    var e = new Editor("#my_textarea")    
-
-Listen to events: (acts very similar to jquery object)
-    
-    e.bind({
-        'keyup' : myHandler
-      , 'change' : myHandler
-      , 'nodeChange': myHandler
-    })
-
-Get a normalised version of the editor's content:
-
-    var html = e.html() // Normalised
-      , text = e.val()
-      , also_text = e.text()
-    
-
-
-Set the transform for normalisation:
-  
-    e.transformText({
-      //   Selector  : HTML
-          'bold' : '<strong />'
-        , 'a' : '<span class="mock-link" />'
-        , '.my_class' : function(text){return to_html(text)}
-      }
-    })
-
-Or: 
-
-    e.normalizeText = function(html){
-      return my_normalize(html)
-    }
-
----- Rough ideas: ---    
-
-
-
-// bubble publisher
-
-yam.ui.shared.typeAhead.registerField(ed.$, {
-  onSelect : function(res, ta){
-    var selection = ta.getSelection()
-    ed.replace(selection, Mustache.to_html(bubble_template, res))
-  })
-  
-...
-
-typeahead.getSelection = function(){
-  return ed.getSelection(ed.cursorPos() -1 * triggerLength, len)
-}  
-  
-  
-
-})
+Content Editable, but nicer.
 
 
 
