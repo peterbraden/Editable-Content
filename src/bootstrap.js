@@ -12,3 +12,4 @@ yam.define = function(deps, func){
 	func.apply(this, _.map(deps, function(v){return libs[v]}))	
 
 }
+

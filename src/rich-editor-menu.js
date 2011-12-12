@@ -31,7 +31,7 @@ var defaults = {
 yam.RichEditorMenu = function(editor, settings){
   var self = this
   
-  self.settings = yam.mixin({}, settings, defaults)
+  self.settings = _.extend({}, settings, defaults)
   self.editor = editor
   
   this.$ = $("<div class='yj-rich-editor-menu' />")
