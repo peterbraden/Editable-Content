@@ -1,5 +1,4 @@
-var sys = require('sys')
-  , colors = require('colors')
+var colors = require('colors')
   , assert = require('assert')
 
 bcolors = {
@@ -25,7 +24,7 @@ exports.runTest= function(t, browser, cb){
   
   
   var err = function(e){
-   sys.print(('E')[bcol])
+   process.stdout.write(('E')[bcol])
    exports.traceback("\n [" + bname[bcol] + bversion + "] Error: "
       , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 250))
    cb()
@@ -33,9 +32,9 @@ exports.runTest= function(t, browser, cb){
   
   try{
     t[0](browser, cb, err);
-    sys.print(('.')[bcol])
+    process.stdout.write(('.')[bcol])
   } catch(e){
-    sys.print(('E')[bcol])
+    process.stdout.write(('E')[bcol])
     err(e)
   } 
   
@@ -68,14 +67,14 @@ exports.run = function(browser, url, cb, i){
   exports.base = url;
     
   if (!i)
-    sys.print((">")[bcol])
+    process.stdout.write((">")[bcol])
   
   i = i || 0;
   
   if (i<tests.length){
     exports.runTest(tests[i], browser, function(){exports.run(browser, url, cb, i+1)})
   } else { 
-    sys.print(("*")[bcol])
+    process.stdout.write(("*")[bcol])
     cb()
   }  
 }
