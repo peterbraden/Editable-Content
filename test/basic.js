@@ -1,8 +1,10 @@
 var suite = require('./suite')
   , assert = require('assert')
+  , assertSameHTML = suite.assertSameHTML
   , c = suite.callback
 
   , editor_id
+
 
 //setup
 suite.test("Loading page", function(browser, cb, e){
@@ -64,7 +66,7 @@ suite.test("yam.Editor initial value .val()", function(browser, cb, e){
 
 suite.test("yam.Editor initial value .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o.toLowerCase().replace(/"/g, ''),'the <span class=bubble>quick</span> brown fox jumps over the lazy dog')
+    assertSameHTML(o,'The <span class="bubble">quick</span> brown fox jumps over the lazy dog')
     cb();
   }))
 })
@@ -162,7 +164,7 @@ suite.test("Wrap 'fox' in bubble", function(browser, cb, e){
 
 suite.test("fox in bubble .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,'The <span class="bubble">quick</span> brown <span class="bubble">fox</span> jumps over the lazy dogs')
+    assertSameHTML(o, 'The <span class="bubble">quick</span> brown <span class="bubble">fox</span> jumps over the lazy dogs')
     cb();
   }))
 })
@@ -175,5 +177,30 @@ suite.test("caret is at end", function(browser, cb, e){
   }))
 })
 
+/*
+// Uncontenteditable bubble
+suite.test("Wrap 'lazy' in bubble", function(browser, cb, e){
+  browser.eval("window.Ed.wrap(35, 39, '<span contenteditable=" + '"false"' + " class="+'"bubble"' + " />').trigger('paste').text()", c(e, function(e,o){
+    if (e){}
+      //throw e
+    assert.equal(o,'The _quick_ brown _fox_ jumps over the _lazy_ dogs')
+    cb();
+  }))
+})
 
+suite.test("Place caret in in selectable bubble", function(browser, cb, e){
+  browser.execute('window.Ed.range(35,35).select().toString(); window.Ed.caretPos()', c(e, function(e,o){
+    cb()
+  }))
+})  
 
+// Type 's'
+suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
+  browser.type(editor_id, ["a", "a", "a"], function(e2){
+    browser.eval("window.Ed.text()",c(e, function(e3,o){
+      assert.equal(o, 'The _quick_ brown _fox_ jumps over the _lazy_ dogs')
+      cb();
+    }))
+  })
+})
+*/

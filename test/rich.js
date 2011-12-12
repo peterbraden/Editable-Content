@@ -1,8 +1,10 @@
 var suite = require('./suite')
   , assert = require('assert')
+  , assertSameHTML = suite.assertSameHTML
   , c = suite.callback
 
   , editor_id
+
 
 
 //Setup
@@ -60,7 +62,7 @@ suite.test("Bold selection", function(browser, cb, e){
 
 suite.test("bold 'quick' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The <strong>quick</strong> brown fox jumps over the lazy dog")
+    assertSameHTML(o,"The <strong>quick</strong> brown fox jumps over the lazy dog")
     cb();
   }))
 })
@@ -77,7 +79,7 @@ suite.test("unbold selection", function(browser, cb, e){
 
 suite.test("unbold 'quick' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown fox jumps over the lazy dog")
+    assertSameHTML(o,"The quick brown fox jumps over the lazy dog")
     cb();
   }))
 })
@@ -104,7 +106,7 @@ suite.test("italicise selection", function(browser, cb, e){
 
 suite.test("italic 'fox' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown <em>fox</em> jumps over the lazy dog")
+    assertSameHTML(o,"The quick brown <em>fox</em> jumps over the lazy dog")
     cb();
   }))
 })
@@ -120,7 +122,7 @@ suite.test("unitalic selection", function(browser, cb, e){
 
 suite.test("unitalic 'fox' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown fox jumps over the lazy dog")
+    assertSameHTML(o,"The quick brown fox jumps over the lazy dog")
     cb();
   }))
 })
@@ -155,7 +157,7 @@ suite.test("bold selection 'jumps'", function(browser, cb, e){
 
 suite.test("bold italic 'jumps' .html()", function(browser, cb, e){
   browser.eval("window.Ed.html()",c(e, function(e,o){
-    assert.equal(o,"The quick brown fox <em><strong>jumps</strong></em> over the lazy dog")
+    assertSameHTML(o,"The quick brown fox <em><strong>jumps</strong></em> over the lazy dog")
     cb();
   }))
 })
@@ -182,3 +184,45 @@ suite.test("'jumped' value", function(browser, cb, e){
       cb();
   }))
 })
+
+
+// Change to 'jumping under'
+suite.test('select "ed ov"', function(browser, cb, e){
+  browser.eval("window.Ed.range(24,29).select().toString()",c(e, function(e,o){
+    assert.equal(o,"ed ov")
+    cb();
+  }))
+})
+
+
+suite.test("yam.Editor type 'ed'", function(browser, cb, e){
+  browser.type(editor_id, ["i", "n", "g", " ", "u", "n", "d"], function(e){
+    cb();
+  })
+})
+
+suite.test("'jumping under' value", function(browser, cb, e){
+  browser.eval("$('#output').text()" ,c(e, function(er,o){
+      assert.equal(o,'The quick brown fox _*jumping und*_er the lazy dog')
+      cb();
+  }))
+})
+
+suite.test('select "under"', function(browser, cb, e){
+  browser.eval("window.Ed.range(28,33).select().toString()",c(e, function(e,o){
+    assert.equal(o,"under")
+    cb();
+  }))
+})
+
+/*
+suite.test("unitalicise selection 'jumps'", function(browser, cb, e){
+  browser.execute("window.Ed.execCommand('italic'); window.Ed.execCommand('bold');",c(e, function(er,o){
+    browser.eval("$('#output').text()" ,c(e, function(er,o){
+        assert.equal(o,'The quick brown fox _*jumping *_under the lazy dog')
+        cb();
+      }))    
+  }))
+})
+*/
+

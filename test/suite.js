@@ -1,6 +1,6 @@
 var sys = require('sys')
   , colors = require('colors')
-
+  , assert = require('assert')
 
 bcolors = {
     firefox : 'red'
@@ -81,5 +81,8 @@ exports.run = function(browser, url, cb, i){
 }
   
 
+exports.assertSameHTML = function(res,control){
+  assert.equal(res.toLowerCase().replace(/"/g, ''), control.toLowerCase().replace(/"/g, ''))
+}
 
 

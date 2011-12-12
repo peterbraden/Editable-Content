@@ -7,7 +7,7 @@
 *
 */
 
-yam.define('yam.$', function($){
+yam.define(['yam.$'], function($){
 
 yam.dom = {}
 

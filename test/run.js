@@ -3,7 +3,7 @@ var wd = require('wd')
   , tests = require('./suite')
   
   , basic = require('./basic')
-  , rich = require('./rich')
+  //, rich = require('./rich')
    // , scratch = require('./scratchpad')
     
 // Set up Command line options
