@@ -2,7 +2,7 @@ var wd = require('wd')
   , _ = require('underscore')
   , tests = require('./suite')
   
-  , basic = require('./basic')
+  //, basic = require('./basic')
   , rich = require('./rich')
    // , scratch = require('./scratchpad')
     

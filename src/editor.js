@@ -121,7 +121,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
   e._normalizeHTML = function(){
-    var $elem = this.$.clone()
+    var $elem = $('<pre />').append(this.$.clone())
     
     if(in_webkit){
       $elem.find('b').each(function(){replaceTag(this, 'strong')})
@@ -171,7 +171,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   /*
   */
   e.html = function(){
-    return this._normalizeHTML().html()
+    return this._normalizeHTML().children().html()
   }
   
   /*
@@ -191,7 +191,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     })
     
     text = this.normalize(text)
-    return text.text()
+    return text.text().replace('\n', '\\n')
   }
   
   e.rawText = function(){
