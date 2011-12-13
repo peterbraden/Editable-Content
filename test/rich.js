@@ -215,7 +215,7 @@ suite.test('select "under"', function(browser, cb, e){
   }))
 })
 
-/*
+
 suite.test("unitalicise selection 'jumps'", function(browser, cb, e){
   browser.execute("window.Ed.execCommand('italic'); window.Ed.execCommand('bold');",c(e, function(er,o){
     browser.eval("$('#output').text()" ,c(e, function(er,o){
@@ -224,5 +224,51 @@ suite.test("unitalicise selection 'jumps'", function(browser, cb, e){
       }))    
   }))
 })
-*/
 
+
+// === Reset Content.. ===
+suite.test('reset content', function(browser, cb, e){
+  browser.eval("window.Ed.text('The quick brown fox jumps over the lazy dog')",c(e, function(e,o){
+    assert.equal(o,"The quick brown fox jumps over the lazy dog")
+    cb();
+  }))
+})
+
+
+// Play with line breaks...
+
+suite.test('select "quick brown"', function(browser, cb, e){
+  browser.eval("window.Ed.range(4,15).select().toString()",c(e, function(e,o){
+    assert.equal(o,"quick brown")
+    cb();
+  }))
+})
+
+suite.test("bold 'quick;", function(browser, cb, e){
+  browser.execute("window.Ed.execCommand('bold');",c(e, function(er,o){
+    browser.eval("$('#output').text()" ,c(e, function(er,o){
+        assert.equal(o,'The *quick brown* fox jumps over the lazy dog')
+        cb();
+      }))    
+  }))
+})
+
+suite.test('select "quick| brown"', function(browser, cb, e){
+  browser.eval("window.Ed.range(9, 9).select()",c(e, function(e,o){
+    cb();
+  }))
+})
+
+suite.test("yam.Editor type '\\n'", function(browser, cb, e){
+  browser.type(editor_id, ["\n"], function(e){
+    cb();
+  })
+})
+
+
+suite.test("newline value", function(browser, cb, e){
+  browser.eval("window.Ed.text()" ,c(e, function(er,o){
+      assert.equal(o,'The *quick\n brown* fox jumps over the lazy dog')
+      cb();
+  }))
+})

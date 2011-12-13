@@ -177,7 +177,7 @@ suite.test("caret is at end", function(browser, cb, e){
   }))
 })
 
-/*
+
 // Uncontenteditable bubble
 suite.test("Wrap 'lazy' in bubble", function(browser, cb, e){
   browser.eval("window.Ed.wrap(35, 39, '<span contenteditable=" + '"false"' + " class="+'"bubble"' + " />').trigger('paste').text()", c(e, function(e,o){
@@ -203,4 +203,4 @@ suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
     }))
   })
 })
-*/
+

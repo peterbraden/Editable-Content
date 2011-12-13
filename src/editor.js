@@ -3,6 +3,9 @@
 
 Content Editable, but nicer.
 
+// TODO
+
+- selection change event    
     
 */
 
@@ -174,6 +177,10 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   /*
   */
   e.text = e.val = function(){
+    if (arguments.length){
+      this.$.text.apply(this.$, arguments)
+    }
+    
     var text = this._normaliseText(this._normalizeHTML())
       , self = this    
              
