@@ -24,9 +24,14 @@ exports.runTest= function(t, browser, cb){
   
   
   var err = function(e){
+   var url = ''
+   if (browser.options.host == 'ondemand.saucelabs.com')
+     url = '\n Details available at ' + ('https://saucelabs.com/jobs/' + browser.sessionID).blue.underline
+     
    process.stdout.write(('E')[bcol])
    exports.traceback("\n [" + bname[bcol] + bversion + "] Error: "
-      , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 250))
+      , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 250)
+      , url)
    cb()
   }
   
