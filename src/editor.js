@@ -181,7 +181,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
       this.$.text.apply(this.$, arguments)
     }
     
-    var text = this._normaliseText(this._normalizeHTML())
+    var text = this._normaliseText(this._normalizeHTML().children())
       , self = this    
              
     _.each(this.textTransforms, function(t){
