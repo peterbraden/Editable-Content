@@ -338,7 +338,7 @@ var _getCaretPosContentEditable = function (elem) {
     *  what we do is create a selection from the beginning of the element to the end, then look 
     *  at it's contents jquery text length which will include child elements.
     */
-    var sel = window.getSelection().getRangeAt(0);
+    var sel = window.getSelection().getRangeAt(0).cloneRange();
     sel.setEnd(sel.startContainer, sel.startOffset)
     
     // this little ninja bit of jquery means that we are setting the start of the range to 
