@@ -194,7 +194,7 @@ suite.test("Place caret in in selectable bubble", function(browser, cb, e){
   }))
 })  
 
-// Type 's'
+// Type 'a's'
 suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
   browser.type(editor_id, ["a", "a", "a"], function(e2){
     browser.eval("window.Ed.text()",c(e, function(e3,o){
@@ -203,4 +203,24 @@ suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
     }))
   })
 })
+
+
+// Type in middle of sentence
+suite.test("Place caret in '|brown'", function(browser, cb, e){
+  browser.execute('window.Ed.range(10,10).select().toString(); window.Ed.caretPos()', c(e, function(e,o){
+    cb()
+  }))
+})
+
+suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
+  browser.type(editor_id, ["d", "a", "r", "k", " "], function(e2){
+    browser.eval("window.Ed.text()",c(e, function(e3,o){
+      assert.equal(o, 'The _quick_ dark brown _fox_ jumps over the _lazy_ dogs')
+      cb();
+    }))
+  })
+})
+
+
+
 
