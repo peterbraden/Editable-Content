@@ -103,7 +103,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     //TODO: Fun times!
     
     // New Lines
-    if(in_webkit) 
+    if(in_webkit)
       $elem.find("div").replaceWith(function() { return "\n" + this.innerHTML; });    
     if(in_ie) 
       $elem.find("p").replaceWith(function() { return this.innerHTML  +  "<br>"; });
@@ -192,6 +192,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     
     text = this.normalize(text)
     return text.text().replace('\n', '\\n')
+      .replace(String.fromCharCode(160), ' ')// nbsp;
   }
   
   e.rawText = function(){

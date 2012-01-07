@@ -194,6 +194,7 @@ suite.test("Place caret in in selectable bubble", function(browser, cb, e){
   }))
 })  
 
+/*
 // Type 'a's'
 suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
   browser.type(editor_id, ["a", "a", "a"], function(e2){
@@ -204,6 +205,7 @@ suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
   })
 })
 
+*/
 
 // Type in middle of sentence
 suite.test("Place caret in '|brown'", function(browser, cb, e){
