@@ -281,6 +281,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
 
+  e.attr = function(){return this.$.attr.apply(this.$, arguments)}
   e.width = function(){return this.$.width.apply(this.$, arguments)}
   e.outerWidth = function(){return this.$.outerWidth.apply(this.$, arguments)}
   e.height = function(){return this.$.height.apply(this.$, arguments)}
