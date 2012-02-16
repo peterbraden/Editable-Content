@@ -41,7 +41,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   e._init = function(args){
     if (args.length > 0){
       // First arg is either a elem, jquery elem or selector
-      this.$ = this.$elem = $(args[0])
+      this.$ = this.$elem = (args[0] instanceof $)  ? args[0] : $(args[0])
       
     } else{
       throw "Not implemented 0 args yet"
