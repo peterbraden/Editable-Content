@@ -348,7 +348,7 @@ var _getCaretPosContentEditable = function (elem) {
     sel.setStart($(sc).parents().add(sc).filter('[contenteditable="true"], [contenteditable="plaintext-only"]')[0].firstChild, 0) 
     var range = sel.cloneContents()
     
-    return $(range).text().length 
+    return range.textContent.length 
   } else if (document.selection) { // IE
       /*
       * This took a looong time to work out.
