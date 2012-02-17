@@ -286,6 +286,6 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   e.outerWidth = function(){return this.$.outerWidth.apply(this.$, arguments)}
   e.height = function(){return this.$.height.apply(this.$, arguments)}
   e.outerHeight = function(){return this.$.outerHeight.apply(this.$, arguments)}
-  e.offset = function(){return this.$.apply(this.$, arguments)}
+  e.offset = function(){return this.$.offset.apply(this.$, arguments)}
   
 })
