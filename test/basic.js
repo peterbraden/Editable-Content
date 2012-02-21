@@ -72,19 +72,29 @@ suite.test("yam.Editor initial value .html()", function(browser, cb, e){
 })
 
 
+
 suite.test("Dom range sanity (1)", function(browser, cb, e){
-    browser.execute("new yam.dom.Range(Window.Ed.$[0], 1, 6).toString()",c(e, function(e,o){
+    browser.execute("new yam.dom.Range(window.Ed.$[0], 1, 6).toString()",c(e, function(e,o){
       cb();
     }))
   })
-
 
 
 suite.test("Dom range sanity", function(browser, cb, e){
-    browser.execute("new yam.dom.Range(Window.Ed.$[0], 1, 6)",c(e, function(e,o){
+    browser.execute("new yam.dom.Range(window.Ed.$[0], 1, 6)",c(e, function(e,o){
       cb();
     }))
   })
+
+
+suite.test("Range all text (sanity)", function(browser, cb, e){
+  browser.eval("yam.dom.range(window.Ed.$[0], 0, 43).toString()", c(e, function(e,o){
+    assert.equal(o,'The quick brown fox jumps over the lazy dog')
+    cb();
+  }))
+})
+
+
 
 
 
@@ -222,7 +232,6 @@ suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
     }))
   })
 })
-
 
 
 

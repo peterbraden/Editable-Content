@@ -166,6 +166,9 @@ http://www.quirksmode.org/dom/range_intro.html
 
 
 var eachText = function(elem, cb){ 
+  if ($(elem)[0].nodeType == 3)
+    return cb(elem)
+
   $(elem).contents().each(function(){
     if (this.nodeType == 3) // Text
       cb(this)
@@ -206,28 +209,34 @@ r.prototype._initFromIndices = function(elem, start, end){
 
   // Sanity Checking
   if (_text.length < end)
-    throw "Range end exceeds element length"
-  if (_text.length < end)
-    throw "Range start exceeds element length"    
+    throw "Range end exceeds element length:" + end + " > " + _text.length   
+  if (_text.length < start)
+    throw "Range start exceeds element length: " + start + " > " + _text.length    
 
 
   if (document.createRange) {  // Modern Browsers
   
     this.raw = document.createRange();
     // Descend into nodes to find actual start
-    var i = 0;
+    var i = 0
+      , last
+
     eachText(elem, function(text){
       var len = text.nodeValue.length
       if (i + len > start && !startset){
         self.raw.setStart(text, start-i);
         startset=true;
       }  
-      if (i + len > end && !endset){
+      if (i + len >= end && !endset){
         self.raw.setEnd(text, end-i);
         endset=true;
       }  
+      last = text
       i += len
     })
+
+    if (last && !endset)
+      self.raw.setEnd(last, end);
   
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
