@@ -249,7 +249,7 @@ r.prototype._initFromIndices = function(elem, start, end){
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
-	this.raw.collapse(true);
+	  this.raw.collapse(true);
     this.raw.moveStart('character', start);
     this.raw.moveEnd('character', end - start);
   }
@@ -300,7 +300,7 @@ r.prototype.insert = function(elem){
     this.raw.insertNode(node)
   } else if (isIERangeImpl()){
     this.raw.collapse(true);
-    this.raw.pasteHTML((typeof elem == 'string') ? elem.slice(1) : $(elem).html());
+    //this.raw.pasteHTML((typeof elem == 'string') ? elem : $(elem).html());
   }  
 
 }
