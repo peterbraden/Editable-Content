@@ -178,6 +178,14 @@ var eachText = function(elem, cb){
 }
 
 
+var isModernRangeImpl = function(){
+  return (!! document.createRange);
+}
+
+var isIERangeImpl = function(){
+  return (!! document.selection && document.selection.createRange)
+}
+
 yam.dom.Range = function(){
   switch (arguments.length){
     case 1:
@@ -214,7 +222,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     throw "Range start exceeds element length: " + start + " > " + _text.length    
 
 
-  if (document.createRange) {  // Modern Browsers
+  if (isModernRangeImpl()) {
   
     this.raw = document.createRange();
     // Descend into nodes to find actual start
@@ -258,7 +266,7 @@ r.prototype.toString = function(){
 }  
 
 r.prototype.wrap = function(elem){
-  if (document.createRange){
+  if (isModernRangeImpl()) {
     // We don't attempt to solve the problem of partial selection, in
     // that case a Range exception will be thrown.
     this.raw.surroundContents($(elem)[0])
@@ -275,19 +283,41 @@ r.prototype.inside = function(elem){
 // Set range as user selection
 r.prototype.select = function(){
   // http://stackoverflow.com/questions/4183401/can-you-set-and-or-change-the-users-text-selection-in-javascript
-  if (window.getSelection && document.createRange) {
+  if (window.getSelection && isModernRangeImpl()) {
     var sel = window.getSelection()
     sel.removeAllRanges();
     sel.addRange(this.raw);
   } else if (document.selection && document.body.createTextRange) {
     this.raw.select();
   }
-
   
   return this;
 }
 
+r.prototype.insert = function(elem){
+  var node = (typeof elem == 'string') ? document.createTextNode(elem) : $(elem)[0]
 
+  if (isModernRangeImpl()) {
+    this.raw.insertNode(node)
+  } else if (isIERangeImpl()){
+    this.raw.collapse(true);
+    this.raw.pasteHTML(node.outerHTML);
+  }  
+
+}
+
+r.prototype.deleteContents = function(){
+  if (isModernRangeImpl()) {
+    this.raw.deleteContents(); 
+  } else if (isIERangeImpl()){
+    this.raw.pasteHTML("")
+  } 
+}
+
+r.prototype.replaceContents = function(elem){
+  this.deleteContents();
+  this.insert(elem);
+}
 
 
 

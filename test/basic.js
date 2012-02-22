@@ -234,4 +234,12 @@ suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
 })
 
 
+// Insert 
+
+suite.test(".replace(range, text)", function(browser, cb, e){
+  browser.eval("window.Ed.replace(window.Ed.range(0, 3), 'A cunning ')",c(e, function(e3,o){
+    assert.equal(o, "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs");
+    cb();
+  }))
+})
 

@@ -263,6 +263,25 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
       return sel
     }
   }
+
+  /*
+  Usage:
+  e.replace(startInd, endInd, elem)
+  e.replace(rangeObj, elem)
+  */
+  e.replace = function(){
+    var range, elem;
+    
+    if (arguments.length == 2){
+      range = arguments[0];
+      elem = arguments[1];
+    } else {
+      elem = arguments[2];
+      range = this.range(arguments[0], arguments[1])
+    }
+
+    range.replaceContents(elem);
+  }
   
   e.focus = function(){
     dom.selection.moveCursorToEnd(this.$[0])
