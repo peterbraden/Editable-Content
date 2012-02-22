@@ -300,7 +300,7 @@ r.prototype.insert = function(elem){
     this.raw.insertNode(node)
   } else if (isIERangeImpl()){
     this.raw.collapse(true);
-    //this.raw.pasteHTML((typeof elem == 'string') ? elem : $(elem).html());
+    this.raw.pasteHTML((typeof elem == 'string') ? elem : $(elem).html());
   }  
 
 }
