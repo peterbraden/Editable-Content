@@ -300,7 +300,7 @@ r.prototype.insert = function(elem){
     this.raw.insertNode(node)
   } else if (isIERangeImpl()){
     this.raw.collapse(true);
-    this.raw.pasteHTML((typeof elem == 'string') ? elem : $(elem).html());
+    this.raw.pasteHTML((typeof elem == 'string') ? elem.slice(1) : $(elem).html());
   }  
 
 }
@@ -315,7 +315,6 @@ r.prototype.deleteContents = function(){
 
 r.prototype.replaceContents = function(elem){
   if (isIERangeImpl()){
-    this.raw.moveStart('character', 1)
     this.raw.moveEnd('character', -1)
   }  
   this.deleteContents();
