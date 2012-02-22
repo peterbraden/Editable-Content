@@ -295,13 +295,12 @@ r.prototype.select = function(){
 }
 
 r.prototype.insert = function(elem){
-  var node = (typeof elem == 'string') ? document.createTextNode(elem) : $(elem)[0]
-
   if (isModernRangeImpl()) {
+    var node = (typeof elem == 'string') ? document.createTextNode(elem) : $(elem)[0]
     this.raw.insertNode(node)
   } else if (isIERangeImpl()){
     this.raw.collapse(true);
-    this.raw.pasteHTML(node.outerHTML);
+    this.raw.pasteHTML((typeof elem == 'string') ? elem : $(elem).html());
   }  
 
 }
