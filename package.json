@@ -1,0 +1,13 @@
+{
+  "name" : "EditableContent"
+  , "version" : "0.0.1"
+  , "dependencies" : {
+      "colors" : "*"
+    , "nomnom" : "*"
+    , "underscore" : "*"
+    , "wd" : "*"
+  }
+  , "scripts" : {
+    "test" : " node test/run.js --username yammer-travis-ci --apikey 892d30a3-bdb8-4387-a8c0-f5fb7469b185 --browser firefox,iexplore@7"
+  }
+}
