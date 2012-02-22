@@ -315,7 +315,7 @@ r.prototype.deleteContents = function(){
 
 r.prototype.replaceContents = function(elem){
   if (isIERangeImpl()){
-    this.raw.moveEnd('character', -1)
+  //  this.raw.moveEnd('character', -1)
   }  
   this.deleteContents();
   this.insert(elem);
