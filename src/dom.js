@@ -309,14 +309,11 @@ r.prototype.deleteContents = function(){
   if (isModernRangeImpl()) {
     this.raw.deleteContents(); 
   } else if (isIERangeImpl()){
-    this.raw.text = ""
+    this.raw.text = "" // For some reason pasteHTML creates an empty space so use .text
   } 
 }
 
 r.prototype.replaceContents = function(elem){
-  if (isIERangeImpl()){
-    this.raw.moveEnd('character', -1)
-  }  
   this.deleteContents();
   this.insert(elem);
 }
