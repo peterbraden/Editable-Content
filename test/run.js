@@ -24,6 +24,7 @@ var done = function(){
     running -=1;
   } else {
     tests.report();
+    process.exit(tests.errors().length)
   }
 }
 

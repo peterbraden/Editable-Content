@@ -16,7 +16,11 @@ exports.traceback = function(){
   else 
     _tbs.push(Array.prototype.join.apply(arguments, [' ']))
 }
- 
+
+exports.errors = function(){
+  return _tbs
+}
+
 exports.runTest= function(t, browser, cb){
   var bname = browser.desiredCapabilities.browserName
     , bcol = bcolors[bname] || 'green'
