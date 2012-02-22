@@ -309,7 +309,7 @@ r.prototype.deleteContents = function(){
   if (isModernRangeImpl()) {
     this.raw.deleteContents(); 
   } else if (isIERangeImpl()){
-    this.raw.pasteHTML("")
+    this.raw.text = ""
   } 
 }
 
