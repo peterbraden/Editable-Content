@@ -314,8 +314,10 @@ r.prototype.deleteContents = function(){
 }
 
 r.prototype.replaceContents = function(elem){
-  if (isIERangeImpl())
+  if (isIERangeImpl()){
+    this.raw.moveStart('character', 1)
     this.raw.moveEnd('character', -1)
+  }  
   this.deleteContents();
   this.insert(elem);
 }
