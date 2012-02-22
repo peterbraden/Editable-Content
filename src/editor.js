@@ -281,6 +281,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     }
 
     range.replaceContents(elem);
+    return this
   }
   
   e.focus = function(){
@@ -288,7 +289,10 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     return this
   }
   
-  e.append = function(){}
+  e.append = function(elem){
+    this.replace(this.caretPos(), this.caretPos(), elem)
+    return this
+  }
   
   // similar to browsers execCommand
   e.execCommand = function(command, showUI, value){
