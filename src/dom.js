@@ -251,7 +251,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveToElementText(elem);
 	this.raw.collapse(true);
     this.raw.moveStart('character', start);
-    this.raw.moveEnd('character', end - start-1);
+    this.raw.moveEnd('character', end - start);
   }
     
   
@@ -314,6 +314,8 @@ r.prototype.deleteContents = function(){
 }
 
 r.prototype.replaceContents = function(elem){
+  if (isIERangeImpl())
+    this.raw.moveEnd('character', -1)
   this.deleteContents();
   this.insert(elem);
 }
