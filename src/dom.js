@@ -247,8 +247,8 @@ r.prototype._initFromIndices = function(elem, start, end){
       self.raw.setEnd(last, end);
     
     if (start == end)
-      self.raw.collapse(true)
-
+      self.raw.collapse(false) // For some reason, this must be the end or firefox cant select last char.
+    
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);

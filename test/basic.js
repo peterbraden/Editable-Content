@@ -244,7 +244,7 @@ suite.test(".replace(range, text)", function(browser, cb, e){
 })
 
 suite.test(".replace(1,1, text)", function(browser, cb, e){
-  browser.eval("window.Ed.replace(61, 61, ' at night').text()",c(e, function(e3,o){
+  browser.eval("window.Ed.replace(55, 55, ' at night').text()",c(e, function(e3,o){
     assert.equal(o, "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");
     cb();
   }))
