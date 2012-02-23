@@ -254,7 +254,8 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveToElementText(elem);
 	  this.raw.collapse(true);
     this.raw.moveStart('character', start);
-    this.raw.moveEnd('character', end - start);
+    if (this.raw.moveEnd('character', end - start) != end-start)
+      throw "Could not move range end that far"
   }
     
   

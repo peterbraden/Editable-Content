@@ -233,6 +233,14 @@ suite.test("yam.Editor type 'aaa'", function(browser, cb, e){
   })
 })
 
+/*
+suite.test("Sanity check - value length", function(browser, cb, e){
+  browser.eval("window.Ed.rawText().length",c(e, function(e3,o){
+    assert.equal(o, 49);
+    cb();
+  }))
+})
+*/
 
 // Insert 
 
@@ -243,9 +251,17 @@ suite.test(".replace(range, text)", function(browser, cb, e){
   }))
 })
 
+
+suite.test("Sanity check - value length", function(browser, cb, e){
+  browser.eval("[window.Ed.range(0,55).toString(), window.Ed.rawText()]",c(e, function(e3,o){
+    assert.equal(o[0], o[1]);
+    cb();
+  }))
+})
+/*
 suite.test(".replace(1,1, text)", function(browser, cb, e){
   browser.eval("window.Ed.replace(55, 55, ' at night').text()",c(e, function(e3,o){
     assert.equal(o, "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");
     cb();
   }))
-})
+})*/
