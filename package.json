@@ -10,5 +10,6 @@
   , "scripts" : {
     "test" : " node test/run.js --url http://peterbraden.github.com/Editable-Content/demo --username yammer-travis-ci --apikey 892d30a3-bdb8-4387-a8c0-f5fb7469b185 --browser firefox,iexplore@7,iexplore@8,googlechrome"
     , "test-ff" : " node test/run.js --url http://peterbraden.github.com/Editable-Content/demo --username yammer-travis-ci --apikey 892d30a3-bdb8-4387-a8c0-f5fb7469b185 --browser firefox"
+    , "test-ie" : " node test/run.js --url http://peterbraden.github.com/Editable-Content/demo --username yammer-travis-ci --apikey 892d30a3-bdb8-4387-a8c0-f5fb7469b185 --browser iexplore@7,iexplore@8"
   }
 }
