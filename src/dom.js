@@ -247,7 +247,7 @@ r.prototype._initFromIndices = function(elem, start, end){
       self.raw.setEnd(last, end);
     
     if (start == end)
-      self.raw.collapse()
+      self.raw.collapse(true)
 
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
