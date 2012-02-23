@@ -245,7 +245,10 @@ r.prototype._initFromIndices = function(elem, start, end){
 
     if (last && !endset)
       self.raw.setEnd(last, end);
-  
+    
+    if (start == end)
+      self.raw.collapse()
+
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
@@ -307,7 +310,8 @@ r.prototype.insert = function(elem){
 
 r.prototype.deleteContents = function(){
   if (isModernRangeImpl()) {
-    this.raw.deleteContents(); 
+    if (!this.raw.collapsed)
+      this.raw.deleteContents(); 
   } else if (isIERangeImpl()){
     this.raw.text = "" // For some reason pasteHTML creates an empty space so use .text
   } 
