@@ -258,8 +258,9 @@ r.prototype._initFromIndices = function(elem, start, end){
     
     // HEISENBURG BUG: Without this check there is an IE7 bug whereby the range is shorter
     // than it's text. For some reason this fixes it. I don't even want to know.
-    if (this.raw.text.length != end-start)
-      throw "Range is not equal to len"
+    //if (this.raw.text.length != end-start)
+    //  throw "Range is not equal to len"
+    this.raw.text + ""
   }
     
   
