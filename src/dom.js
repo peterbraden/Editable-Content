@@ -254,16 +254,16 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveToElementText(elem);
     var z = this.raw.text
     this.raw.collapse(true);
+    var y = this.raw.moveEnd('character', end);
     var x = this.raw.moveStart('character', start);
-    var y = this.raw.moveEnd('character', end - start);
   
     window.DEBUG0 = window.DEBUG0 || []
     
     var a = document.selection.createRange().duplicate()
     a.moveToElementText(elem)
     a.collapse(true)
-    a.moveEnd('character', end);
-    window.DEBUG0.push(["!!", this.raw.text, end, start, x, y,z, z.length, a.text, a.text.length]); 
+    var b = a.moveEnd('character', end);
+    window.DEBUG0.push(["!!", this.raw.text, end, start, x, y,z, z.length, a.text, a.text.length, b]); 
     
   }
     
