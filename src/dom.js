@@ -252,16 +252,19 @@ r.prototype._initFromIndices = function(elem, start, end){
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
-	  this.raw.collapse(true);
+
+    // IF IE 7
+    for (var i = start; i< end; i++){
+      if (!this.raw.text.charAt(i)){
+        end ++;
+      }
+    }
+
+    this.raw.collapse(true);
     this.raw.moveStart('character', start);
     this.raw.moveEnd('character', end - start);
     
-    // IF IE 7
-    for (var i = 0; i< this.raw.text.length; i++){
-      if (!this.raw.text.charAt(i)){
-        yam.dom.range(elem, i, i+1).replace('')
-      }
-    }
+
 
   }
     
