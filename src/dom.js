@@ -258,7 +258,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveEnd('character', end - start);
   
     var mv = 1;
-    while (this.raw.text.length != end - start && mv != 0){ // IE7
+    while ((this.raw.text.length != end - start) && (mv != 0)){ // IE7
       mv = this.raw.moveEnd('character', this.raw.text.length - (end - start));
     }  
     
