@@ -252,13 +252,6 @@ suite.test(".replace(range, text)", function(browser, cb, e){
 })
 
 
-suite.test("DEBUG", function(browser, cb, e){
-  browser.eval("(function(){return window.Ed.range(0,55).raw.text})()",c(e, function(e3,o){
-    console.log("!!!!", o)
-    cb();
-  }))
-})
-
 
 suite.test("Sanity check - value length", function(browser, cb, e){
   browser.eval("[window.Ed.range(0,55).toString(), window.Ed.rawText()]",c(e, function(e3,o){
@@ -270,6 +263,14 @@ suite.test("Sanity check - value length", function(browser, cb, e){
 suite.test("Sanity check - value length", function(browser, cb, e){
   browser.eval("[window.Ed.range(49,50).toString(), window.Ed.range(50,51).toString(),window.Ed.range(51,52).toString(),window.Ed.range(52,53).toString(),window.Ed.range(53,54).toString(), window.Ed.range(54,55).toString()]",c(e, function(e3,o){
     assert.deepEqual(o, ['y', ' ', 'd','o','g','s']);
+    cb();
+  }))
+})
+
+
+suite.test("DEBUG", function(browser, cb, e){
+  browser.eval("window.DEBUG_IE7_FOO_CALLED",c(e, function(e3,o){
+    console.log("!!!!", browser, o)
     cb();
   }))
 })

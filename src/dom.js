@@ -252,17 +252,18 @@ r.prototype._initFromIndices = function(elem, start, end){
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
-    this.raw.collapse(true);
-    this.raw.moveStart('character', start);
-    
+
     // IF IE 7
-    for (var i = start; i< end -start; i++){
-      if (!this.raw.moveEnd('character', i)){
-        end ++
+    for (var i = start; i< end; i++){
+      if (!this.raw.text.charAt(i)){
+        end ++;
+        window.DEBUG_IE7_FOO_CALLED = true
       }
     }
-    
-    //this.raw.moveEnd('character', end - start);
+
+    this.raw.collapse(true);
+    this.raw.moveStart('character', start);
+    this.raw.moveEnd('character', end - start);
     
 
 
