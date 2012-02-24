@@ -257,9 +257,9 @@ r.prototype._initFromIndices = function(elem, start, end){
     var x = this.raw.moveStart('character', start);
     var y = this.raw.moveEnd('character', end - start);
   
-    window.DEBUG0 = []
+    window.DEBUG0 = window.DEBUG0 || []
     
-    window.DEBUG0.push([this.raw.text, end, start, x, y,z, z.length]); 
+    window.DEBUG0.push(["!!", this.raw.text, end, start, x, y,z, z.length]); 
     
   }
     
