@@ -257,6 +257,10 @@ r.prototype._initFromIndices = function(elem, start, end){
     var y = this.raw.moveEnd('character', end);
     var x = this.raw.moveStart('character', start);
   
+    if (this.raw.text.length != y-x){
+      this.raw.moveEnd('character', this.raw.text.length - y-x)
+    }
+      
     window.DEBUG0 = window.DEBUG0 || []
     
     var a = document.selection.createRange().duplicate()
@@ -266,7 +270,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     window.DEBUG0.push(["!!", this.raw.text, end, start, x, y,z, z.length, a.text, a.text.length, b]); 
     
     if (a.text.length != b){
-      var d = b - a.text.length
+      var d = b - a.text.length;
       var c = a.moveEnd('character', d);
       window.DEBUG0.push([">>>>>>>>>", c, d, a.text.length, a.text])
     }  
