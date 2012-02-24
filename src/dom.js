@@ -255,9 +255,12 @@ r.prototype._initFromIndices = function(elem, start, end){
 
     this.raw.collapse(true);
     this.raw.moveStart('character', start);
-    while (this.raw.text.length < end - start){
+    this.raw.moveEnd('character', end - start);
+  
+    while (this.raw.text.length != end - start){ // IE7
       this.raw.moveEnd('character', this.raw.text.length - (end - start));
     }  
+    
     
   }
     
