@@ -34,7 +34,7 @@ exports.runTest= function(t, browser, cb){
      
    process.stdout.write(('E')[bcol])
    exports.traceback("\n [" + bname[bcol] + bversion + "] Error: "
-      , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 250)
+      , t[1], ">>> ", e.name, e.message, '\n', ("" + e.stack).substr(0, 500)
       , url)
    cb()
   }

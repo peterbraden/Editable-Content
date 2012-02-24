@@ -309,7 +309,7 @@ r.prototype.insert = function(elem){
   } else if (isIERangeImpl()){
     this.raw.collapse(true);
     if (typeof elem == 'string'){
-     elem.raw.text = elem; //preserve leading spaces by setting text
+     this.raw.text = elem; //preserve leading spaces by setting text
     } else {
      this.raw.pasteHTML($(elem).html());
     } 
