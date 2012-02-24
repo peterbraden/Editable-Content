@@ -257,23 +257,23 @@ r.prototype._initFromIndices = function(elem, start, end){
     
     window.DEBUG0 = window.DEBUG0 || []
     
-    
-    var y = this.raw.moveEnd('character', end);
-    if (this.raw.text.length != y){
-      window.DEBUG0.push([">>>>>>>>>", y - this.raw.text.length, this.raw.text])
-      var d = this.raw.moveEnd('character', y - this.raw.text.length)
-      y += d
+    var mvEnd = this.raw.moveEnd('character', end);
+    if (this.raw.text.length != mvEnd){
+      window.DEBUG0.push([">>>>>>>>>", mvEnd, end, this.raw.text.length])
+      var d = this.raw.moveEnd('character', mvEnd - this.raw.text.length)
       window.DEBUG0.push(["<<<<<<<<", d, this.raw.text])
     }
-    window.DEBUG0.push(["!!", end, start,  y,z, z.length, this.raw.text, this.raw.text.length]); 
+    window.DEBUG0.push(["Rng: ", start + "-" + end, "actual:" +  mvEnd , this.raw.text, this.raw.text.length]); 
     
-    var x = this.raw.moveStart('character', start);
-    if (this.raw.text.length != y-x){
-      window.DEBUG0.push([">>>***>>>>>", (y - x) - this.raw.text.length, y, x, this.raw.text])
-      var d = this.raw.moveStart('character', (y - x) - this.raw.text.length)
+    var mvStart = this.raw.moveStart('character', start);
+    if (this.raw.text.length != mvEnd-mvStart){
+      window.DEBUG0.push([">>>***>>>>>", (mvEnd - mvStart) - this.raw.text.length, mvEnd, mvStart, this.raw.text])
+      var d = this.raw.moveStart('character', (mvEnd - mvStart) - this.raw.text.length)
       window.DEBUG0.push(["<<<<***<<<<", d, this.raw.text])
       
     }  
+    
+    window.DEBUG0.push(["Finished Rng: ", start + "-" + end, "actual:" +  mvEnd , this.raw.text, this.raw.text.length]); 
     
     
   }
