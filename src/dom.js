@@ -254,19 +254,13 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveToElementText(elem);
 
     this.raw.collapse(true);
-    this.raw.moveStart('character', start);
-    this.raw.moveEnd('character', end - start);
+    var z = this raw.text
+    var x = this.raw.moveStart('character', start);
+    var y = this.raw.moveEnd('character', end - start);
   
     window.DEBUG0 = []
     
-    var mv = 1;
-    window.DEBUG0.push([mv, this.raw.text.length, end-start]); 
-
-    while ((this.raw.text.length != end - start) && (mv != 0)){ // IE7
-      window.DEBUG0.push([mv, this.raw.text.length, end-start]); 
-      mv = this.raw.moveEnd('character', this.raw.text.length - (end - start));
-    }  
-    
+    window.DEBUG0.push([this.raw.text, end, start, x, y,z, z.length]); 
     
   }
     
