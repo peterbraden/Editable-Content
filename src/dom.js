@@ -259,7 +259,7 @@ r.prototype._initFromIndices = function(elem, start, end){
   
     // IE7 Bug
     if (this.raw.text.length != end-start)  
-      this.raw = (end - start) - this.raw.text.length
+      this.raw = {toString: function(){return (end - start) - this.raw.text.length}}
   }
     
   
