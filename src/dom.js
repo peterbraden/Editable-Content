@@ -254,7 +254,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveToElementText(elem);
 
     this.raw.collapse(true);
-    var z = this raw.text
+    var z = this.raw.text
     var x = this.raw.moveStart('character', start);
     var y = this.raw.moveEnd('character', end - start);
   
