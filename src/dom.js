@@ -253,13 +253,13 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
 
-    this.raw.collapse(true);
     this.raw.moveStart('character', start);
+    this.raw.collapse(true);
     this.raw.moveEnd('character', end - start);
   
     // IE7 Bug
     if (this.raw.text.length != end-start)  
-      this.raw = "noop"
+      this.raw.moveEnd('character', (end - start) - this.raw.text.length)
   }
     
   
