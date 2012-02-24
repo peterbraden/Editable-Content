@@ -255,26 +255,19 @@ r.prototype._initFromIndices = function(elem, start, end){
     var z = this.raw.text
     this.raw.collapse(true);
     
-    var y = this.raw.moveEnd('character', end);
-    if (this.raw.text.length != y){
-      this.raw.moveEnd('character', this.raw.text.length - y)
-    }
-    var x = this.raw.moveStart('character', start);
-  
-
     window.DEBUG0 = window.DEBUG0 || []
     
-    var a = document.selection.createRange().duplicate()
-    a.moveToElementText(elem)
-    a.collapse(true)
-    var b = a.moveEnd('character', end);
-    window.DEBUG0.push(["!!", this.raw.text, end, start, x, y,z, z.length, a.text, a.text.length, b]); 
     
-    if (a.text.length != b){
-      var d = b - a.text.length;
-      var c = a.moveEnd('character', d);
-      window.DEBUG0.push([">>>>>>>>>", c, d, a.text.length, a.text])
-    }  
+    var y = this.raw.moveEnd('character', end);
+    if (this.raw.text.length != y){
+      var d = this.raw.moveEnd('character', this.raw.text.length - y)
+      window.DEBUG0.push([">>>>>>>>>", this.raw.text.length - y, d, this.raw.text.length, this.raw.text])
+    }
+    window.DEBUG0.push(["!!", end, start,  y,z, z.length, this.raw.text, this.raw.text.length]); 
+    
+    var x = this.raw.moveStart('character', start);
+  
+    
     
   }
     
