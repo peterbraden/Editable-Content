@@ -270,8 +270,10 @@ suite.test("Sanity check - value length", function(browser, cb, e){
 
 
 suite.test(".replace(len,len, text)", function(browser, cb, e){
-  browser.eval("window.Ed.replace(55, 55, ' at night').text()",c(e, function(e3,o){
-    assert.equal(o, "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");
+  browser.eval("[window.Ed.replace(55, 55, ' at night').text(), window.DEBUG0]",c(e, function(e3,o){
+    assert.equal(o[0], "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");
+    console.log("!!", o[1])
+    
     cb();
   }))
 })
