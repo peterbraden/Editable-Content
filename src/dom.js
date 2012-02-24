@@ -260,7 +260,6 @@ r.prototype._initFromIndices = function(elem, start, end){
     // than it's text. For some reason this fixes it. I don't even want to know.
     //if (this.raw.text.length != end-start)
     //  throw "Range is not equal to len"
-    this.raw.text + ""
   }
     
   
@@ -309,7 +308,11 @@ r.prototype.insert = function(elem){
     this.raw.insertNode(node)
   } else if (isIERangeImpl()){
     this.raw.collapse(true);
-    this.raw.pasteHTML((typeof elem == 'string') ? elem : $(elem).html());
+    if (typeof elem == 'string'){
+     elem.raw.text = elem; //preserve leading spaces by setting text
+    } else {
+     this.raw.pasteHtml($(elem).html());
+    } 
   }  
 
 }

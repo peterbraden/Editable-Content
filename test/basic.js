@@ -260,8 +260,8 @@ suite.test("Sanity check - value length", function(browser, cb, e){
 })
 
 suite.test("Sanity check - value length", function(browser, cb, e){
-  browser.eval("window.Ed.range(54,55).toString()",c(e, function(e3,o){
-    assert.equal(o, 's');
+  browser.eval("[window.Ed.range(49,50).toString(), window.Ed.range(50,51).toString(),window.Ed.range(51,52).toString(),window.Ed.range(52,53).toString(),window.Ed.range(53,54).toString(), window.Ed.range(54,55).toString()]",c(e, function(e3,o){
+    assert.deepEqual(o, ['y', ' ', 'd','o','g','s']);
     cb();
   }))
 })
