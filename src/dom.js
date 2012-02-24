@@ -253,8 +253,8 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
 
-    this.raw.moveStart('character', start);
     this.raw.moveEnd('character', end - this.raw.text.length);
+    this.raw.moveStart('character', start);
   }
     
   
