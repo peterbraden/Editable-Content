@@ -256,10 +256,13 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw.moveStart('character', start);
     this.raw.moveEnd('character', end - start);
     
-    // HEISENBURG BUG: Without this check there is an IE7 bug whereby the range is shorter
-    // than it's text. For some reason this fixes it. I don't even want to know.
-    //if (this.raw.text.length != end-start)
-    //  throw "Range is not equal to len"
+    // IF IE 7
+    for (var i = 0; i< this.raw.text.length; i++){
+      if (!this.raw.text.charAt(i)){
+        yam.dom.range(elem, i, i+1).replace('')
+      }
+    }
+
   }
     
   
