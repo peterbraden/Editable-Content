@@ -253,19 +253,14 @@ r.prototype._initFromIndices = function(elem, start, end){
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
 
-    // IF IE 7
-    for (var i = start; i< end; i++){
-      if (!this.raw.text.charAt(i)){
-        end ++;
-        window.DEBUG_IE7_FOO_CALLED = true
-      }
-    }
-
     this.raw.collapse(true);
     this.raw.moveStart('character', start);
     this.raw.moveEnd('character', end - start);
-    
-
+  
+   // HEISENBURG BUG: Without this check there is an IE7 bug whereby the range is shorter
+   // than it's text. For some reason this fixes it. I don't even want to know.
+    if (this.raw.text.length != end-start)  
+      throw "Range is not equal to len"
 
   }
     

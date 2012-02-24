@@ -268,13 +268,6 @@ suite.test("Sanity check - value length", function(browser, cb, e){
 })
 
 
-suite.test("DEBUG", function(browser, cb, e){
-  browser.eval("window.DEBUG_IE7_FOO_CALLED",c(e, function(e3,o){
-    console.log("!!!!", browser, o)
-    cb();
-  }))
-})
-
 suite.test(".replace(len,len, text)", function(browser, cb, e){
   browser.eval("window.Ed.replace(55, 55, ' at night').text()",c(e, function(e3,o){
     assert.equal(o, "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");
