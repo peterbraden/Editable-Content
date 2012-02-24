@@ -252,6 +252,14 @@ suite.test(".replace(range, text)", function(browser, cb, e){
 })
 
 
+suite.test("DEBUG", function(browser, cb, e){
+  browser.eval("(function(){return window.Ed.range(0,55).raw.text})()",c(e, function(e3,o){
+    console.log("!!!!", o)
+    cb();
+  }))
+})
+
+
 suite.test("Sanity check - value length", function(browser, cb, e){
   browser.eval("[window.Ed.range(0,55).toString(), window.Ed.rawText()]",c(e, function(e3,o){
     assert.equal(o[0], o[1]);
