@@ -268,8 +268,8 @@ r.prototype._initFromIndices = function(elem, start, end){
     
     var x = this.raw.moveStart('character', start);
     if (this.raw.text.length != y-x){
-      window.DEBUG0.push([">>>***>>>>>", y-x - this.raw.text.length, this.raw.text])
-      var d = this.raw.moveStart('character', y-x - this.raw.text.length)
+      window.DEBUG0.push([">>>***>>>>>", x - y - this.raw.text.length, this.raw.text])
+      var d = this.raw.moveStart('character', x - y - this.raw.text.length)
       window.DEBUG0.push(["<<<<***<<<<", d, this.raw.text])
       
     }  
