@@ -252,9 +252,8 @@ r.prototype._initFromIndices = function(elem, start, end){
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
-
-    this.raw.collapse(true);
     var z = this.raw.text
+    this.raw.collapse(true);
     var x = this.raw.moveStart('character', start);
     var y = this.raw.moveEnd('character', end - start);
   
