@@ -267,7 +267,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     
     if (a.text.length != b){
       var d = b - a.text.length
-      var c = a.moveEnd('character', f);
+      var c = a.moveEnd('character', d);
       window.DEBUG0.push([">>>>>>>>>", c, d, a.text.length, a.text])
     }  
     
