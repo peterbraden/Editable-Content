@@ -259,7 +259,8 @@ r.prototype._initFromIndices = function(elem, start, end){
   
     window.DEBUG0 = window.DEBUG0 || []
     
-    var a = document.selection.createRange().duplicate().moveToElementText(elem)
+    var a = document.selection.createRange().duplicate()
+    a.moveToElementText(elem)
     a.moveEnd('character', end - start);
     window.DEBUG0.push(["!!", this.raw.text, end, start, x, y,z, z.length, a.text, a.length]); 
     
