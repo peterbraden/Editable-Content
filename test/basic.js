@@ -254,8 +254,9 @@ suite.test(".replace(range, text)", function(browser, cb, e){
 
 
 suite.test("Sanity check - value length", function(browser, cb, e){
-  browser.eval("[window.Ed.range(0,55).toString(), window.Ed.rawText()]",c(e, function(e3,o){
+  browser.eval("[window.Ed.range(0,55).toString(), window.Ed.rawText(), window.DEBUG0]",c(e, function(e3,o){
     assert.equal(o[0], o[1]);
+    console.log("!!", o[2])
     cb();
   }))
 })
