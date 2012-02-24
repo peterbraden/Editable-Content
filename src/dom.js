@@ -262,15 +262,15 @@ r.prototype._initFromIndices = function(elem, start, end){
     if (this.raw.text.length != y){
       window.DEBUG0.push([">>>>>>>>>", y - this.raw.text.length, this.raw.text])
       var d = this.raw.moveEnd('character', y - this.raw.text.length)
-      y -= d
+      y += d
       window.DEBUG0.push(["<<<<<<<<", d, this.raw.text])
     }
     window.DEBUG0.push(["!!", end, start,  y,z, z.length, this.raw.text, this.raw.text.length]); 
     
     var x = this.raw.moveStart('character', start);
-    if (this.raw.text.length != y-x){
-      window.DEBUG0.push([">>>***>>>>>", (y - x) - this.raw.text.length, y, x, this.raw.text])
-      var d = this.raw.moveStart('character', (y - x) - this.raw.text.length)
+    if (this.raw.text.length - y != x){
+      window.DEBUG0.push([">>>***>>>>>", x - this.raw.text.length - y, y, x, this.raw.text])
+      var d = this.raw.moveStart('character', x - this.raw.text.length -y)
       window.DEBUG0.push(["<<<<***<<<<", d, this.raw.text])
       
     }  
