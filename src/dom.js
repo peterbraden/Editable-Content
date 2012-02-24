@@ -311,7 +311,7 @@ r.prototype.insert = function(elem){
     if (typeof elem == 'string'){
      elem.raw.text = elem; //preserve leading spaces by setting text
     } else {
-     this.raw.pasteHtml($(elem).html());
+     this.raw.pasteHTML($(elem).html());
     } 
   }  
 
