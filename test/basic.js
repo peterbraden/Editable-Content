@@ -256,7 +256,6 @@ suite.test(".replace(range, text)", function(browser, cb, e){
 suite.test("Sanity check - value length", function(browser, cb, e){
   browser.eval("[window.Ed.range(0,55).toString(), window.Ed.rawText(), window.DEBUG0]",c(e, function(e3,o){
     assert.equal(o[0], o[1]);
-    console.log("!!", o[2])
     cb();
   }))
 })
@@ -271,9 +270,8 @@ suite.test("Sanity check - value length", function(browser, cb, e){
 
 suite.test(".replace(len,len, text)", function(browser, cb, e){
   browser.eval("[window.Ed.replace(55, 55, ' at night').text(), window.DEBUG0]",c(e, function(e3,o){
-    assert.equal(o[0], "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");
     console.log("!!", o[1])
-    
+    assert.equal(o[0], "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ dogs at night");    
     cb();
   }))
 })
