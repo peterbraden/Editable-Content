@@ -258,14 +258,19 @@ r.prototype._initFromIndices = function(elem, start, end){
     window.DEBUG0 = window.DEBUG0 || []
     
     var mvEnd = this.raw.moveEnd('character', end);
-    if (this.raw.text.length != mvEnd){
+    while (this.raw.text.length != mvEnd){
       window.DEBUG0.push([">>>>>>>>>", mvEnd, end, this.raw.text.length])
       var d = this.raw.moveEnd('character', mvEnd - this.raw.text.length)
       window.DEBUG0.push(["<<<<<<<<", d, this.raw.text])
+      
     }
     window.DEBUG0.push(["Rng: ", start + "-" + end, "actual:" +  mvEnd , this.raw.text, this.raw.text.length]); 
     
+    
     var mvStart = this.raw.moveStart('character', start);
+    // textlength is prob not start
+    //
+    
     if (this.raw.text.length != end-mvStart){
       window.DEBUG0.push([">>>***>>>>>", this.raw.text.length - (mvEnd - mvStart) , mvEnd, mvStart, this.raw.text])
       var d = this.raw.moveStart('character', this.raw.text.length - (mvEnd - mvStart) )
