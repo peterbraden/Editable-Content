@@ -252,18 +252,24 @@ r.prototype._initFromIndices = function(elem, start, end){
   } else if (document.selection && document.selection.createRange) { // IE
     this.raw = document.selection.createRange().duplicate()
     this.raw.moveToElementText(elem);
-    var z = this.raw.text
     this.raw.collapse(true);
     
-    window.DEBUG0 = window.DEBUG0 || []
+    /*
+    These while loops here patch a particularly nasty bug in IE7 whereby
+    the textrange move hits null characters. We can rely on the .text.length
+    to be accurate, but the integer returned by the move method includes the
+    null characters. It will move over the characters, but it may take a few
+    attempts.
     
+    The while loop condition should never be true except in IE7-
+    */
     var mvEnd = this.raw.moveEnd('character', end);
     while (this.raw.text.length != mvEnd){
-      var d = this.raw.moveEnd('character', mvEnd - this.raw.text.length)
+      this.raw.moveEnd('character', mvEnd - this.raw.text.length)
     }
     var mvStart = this.raw.moveStart('character', start);
     while (this.raw.text.length != end-mvStart){
-      var d = this.raw.moveStart('character', this.raw.text.length - (mvEnd - mvStart) )
+      this.raw.moveStart('character', this.raw.text.length - (mvEnd - mvStart))
     }      
   }
     
