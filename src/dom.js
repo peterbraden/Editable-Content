@@ -271,7 +271,7 @@ r.prototype._initFromIndices = function(elem, start, end){
     // textlength is prob not start
     //
     
-    if (this.raw.text.length != end-mvStart){
+    while (this.raw.text.length != end-mvStart){
       window.DEBUG0.push([">>>***>>>>>", this.raw.text.length - (mvEnd - mvStart) , mvEnd, mvStart, this.raw.text])
       var d = this.raw.moveStart('character', this.raw.text.length - (mvEnd - mvStart) )
       window.DEBUG0.push(["<<<<***<<<<", d, this.raw.text])
