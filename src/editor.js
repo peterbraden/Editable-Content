@@ -70,6 +70,8 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     , 'focus' : $.proxy(this._onfocus, this)
     , 'blur' : $.proxy(this._onblur, this)
     , 'paste' :  $.proxy(this._onpaste, this)
+    // input
+   
     })    
   }
   
@@ -185,7 +187,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
       , self = this    
              
     _.each(this.textTransforms, function(t){
-      text.find(t[0]).each(function(){
+      text.parent().find(t[0]).each(function(){
         $(this).replaceWith(t[1]($(this)))
       })        
     })
