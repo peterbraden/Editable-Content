@@ -288,6 +288,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   
   e.focus = function(){
     dom.selection.moveCursorToEnd(this.$[0])
+    this.$.trigger('focus');
     return this
   }
   
