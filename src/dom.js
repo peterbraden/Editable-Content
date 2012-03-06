@@ -536,7 +536,7 @@ s.caretCoords= function(elem){
   
   $('.yj-ghost').remove();
   var phantom = "<span class='yj-ghost'>I</span>"
-    , range = yam.dom.range(s.caretPos(elem), s.caretPos(elem));
+    , range = yam.dom.range(elem, s.caretPos(elem), s.caretPos(elem));
   range.replaceContents(phantom)
 
   var $phantom = $('.yj-ghost')
