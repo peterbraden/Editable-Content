@@ -536,7 +536,9 @@ s.caretCoords= function(elem){
   
   $('.yj-ghost').remove();
   var phantom = "<span class='yj-ghost'>I</span>"
-  s.replaceTextSubstr(s.caretPos(elem), s.caretPos(elem), phantom)
+    , range = yam.dom.range(s.caretPos(elem), s.caretPos(elem));
+  range.replaceContents(phantom)
+
   var $phantom = $('.yj-ghost')
   var pos = $phantom.position()
   pos.height = $phantom.height() 
@@ -558,26 +560,13 @@ s.replaceRange= function(range, html){
   }  
 }
 
-
-s.replaceTextSubstr= function(startindex, endindex, html){
-  s.storeSelections();
-  
-  var range;
-  
-  // Insert fragment - I bet DOJO has a method for this...
-  if (window.getSelection && window.getSelection().getRangeAt) { // Good Browsers
-    var range = window.getSelection().getRangeAt(0);
-    range.setStart(range.startContainer, startindex)
-    range.setEnd(range.startContainer, endindex)
-  } else if (document.selection && document.selection.createRange) { // IE
-    var range = document.selection.createRange()
-    //TODO position
-  } 
-  
-  s.replaceRange(range, html) 
-  
-  s.restoreSelections();
+/*
+// old
+s.replaceTextSubstr= function(startindex, endindex, html){  
+  var range = yam.dom.range(startIndex, endIndex);
+  range.replaceContents(html)
 }
+*/
 
 s.moveCursorToEnd = function(elem){
   // Destroys selections...
