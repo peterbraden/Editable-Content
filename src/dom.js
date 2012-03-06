@@ -511,13 +511,18 @@ var s = yam.dom.selection
 *  @param {int} [pos] The position to set the caret.
 */ 
 s.caretPos= function(elem, _pos){
-  if (!elem || $(elem).length == 0)
+  if (elem instanceof $)
+    elem = elem[0]
+
+  if (!elem)
     return -1 
 
+   var isTA = (elem.nodeName.toLowerCase() == 'input' || elem.nodeName.toLowerCase() == 'textarea')
+
   if (_pos){
-    return $(elem).is('input, textarea') ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
+    return isTA ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
   }
-  return $(elem).is('input, textarea') ? _getCaretPosInput(elem) : _getCaretPosContentEditable(elem)
+  return isTA ? _getCaretPosInput(elem) : _getCaretPosContentEditable(elem)
 }  
 
 /*
