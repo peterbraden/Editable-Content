@@ -536,7 +536,7 @@ s.caretCoords= function(elem){
   
   $('.yj-ghost').remove();
   var phantom = "<span class='yj-ghost'>I</span>"
-  s.replaceTextSubstr(s.caretPos(), s.caretPos(), phantom)
+  s.replaceTextSubstr(s.caretPos(elem), s.caretPos(elem), phantom)
   var $phantom = $('.yj-ghost')
   var pos = $phantom.position()
   pos.height = $phantom.height() 
