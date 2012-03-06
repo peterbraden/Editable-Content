@@ -71,6 +71,13 @@ suite.test("yam.Editor initial value .html()", function(browser, cb, e){
   }))
 })
 
+suite.test("Dom range sanity (0)", function(browser, cb, e){
+    browser.eval("yam.dom.selection.caretPos($('#i-dont-exist'))",c(e, function(e,o){
+      assert.equal(o, -1);
+      cb();
+    }))
+  })
+
 
 
 suite.test("Dom range sanity (1)", function(browser, cb, e){

@@ -511,6 +511,9 @@ var s = yam.dom.selection
 *  @param {int} [pos] The position to set the caret.
 */ 
 s.caretPos= function(elem, _pos){
+  if (!elem || !elem[0])
+    return -1 
+
   if (_pos){
     return $(elem).is('input, textarea') ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
   }
