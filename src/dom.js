@@ -511,6 +511,9 @@ var s = yam.dom.selection
 *  @param {int} [pos] The position to set the caret.
 */ 
 s.caretPos= function(elem, _pos){
+  if (arguments.length == 0 && document.activeElement)
+    elem = document.activeElement
+
   if (elem instanceof $)
     elem = elem[0]
 
