@@ -522,21 +522,31 @@ s.caretPos= function(elem, _pos){
 
    var isTA = (elem.nodeName.toLowerCase() == 'input' || elem.nodeName.toLowerCase() == 'textarea')
 
-  if (_pos){
-    return isTA ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
-  }
-  return isTA ? _getCaretPosInput(elem) : _getCaretPosContentEditable(elem)
+  try {
+    if (_pos){
+      return isTA ? _setCaretPosInput(elem, _pos) : _setCaretPosContentEditable(elem, _pos)
+    }
+    return isTA ? _getCaretPosInput(elem) : _getCaretPosContentEditable(elem)
+  } catch (e){
+    // No selection, throws "INDEX_SIZE_ERR: DOM Exception 1"
+    return - 1
+  }  
 }  
 
 /*
 *  Get coords of caret
 */
 s.caretCoords= function(elem){
-  s.storeSelections()
-  
+  var c = s.caretPos(elem)
+
+  if (c < 1)
+    return undefined
+
   $('.yj-ghost').remove();
-  var phantom = "<span class='yj-ghost'>I</span>"
-    , range = yam.dom.range(elem, s.caretPos(elem), s.caretPos(elem));
+  
+  var phantom = $("<span class='yj-ghost'>I</span>")
+    , range = yam.dom.range(elem, c, c);
+
   range.replaceContents(phantom)
 
   var $phantom = $('.yj-ghost')
