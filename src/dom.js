@@ -550,7 +550,7 @@ s.caretCoords= function(elem){
   range.replaceContents(phantom)
 
   var $phantom = $('.yj-ghost')
-  var pos = $phantom.position()
+  var pos = $phantom.offset()
   pos.height = $phantom.height() 
   $phantom.remove()
   
