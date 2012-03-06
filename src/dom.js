@@ -514,7 +514,7 @@ s.caretPos= function(elem, _pos){
   if (elem instanceof $)
     elem = elem[0]
 
-  if (!elem)
+  if (!elem || !elem.nodeName)
     return -1 
 
    var isTA = (elem.nodeName.toLowerCase() == 'input' || elem.nodeName.toLowerCase() == 'textarea')
