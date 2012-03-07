@@ -296,7 +296,8 @@ r.prototype.wrap = function(elem){
 }
 
 r.prototype.inside = function(elem){
-  return !!$(elem).has($(this.raw.commonAncesterContainer)).length
+  var nd = this.raw.commonAncestorContainer
+  return $(nd).parents().is(elem)
 }
 
 // Set range as user selection
