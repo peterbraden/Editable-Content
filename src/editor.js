@@ -177,6 +177,10 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   }
   
   /*
+
+  TODO - text is normalised '.text'
+    val is text with substitutions applied
+
   */
   e.text = e.val = function(){
     if (arguments.length){
