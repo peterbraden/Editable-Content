@@ -14,7 +14,7 @@ suite.test("Loading page", function(browser, cb, e){
 //Sanity
 suite.test("Testing page loaded jquery", function(browser, cb, e){
   browser.eval("window.$.fn.jquery", c(e, function(e,o){
-    assert.equal(o,'1.4.2')
+    assert.equal(o,'1.7.1')
     cb();
   }))
 })
