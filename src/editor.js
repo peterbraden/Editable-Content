@@ -215,12 +215,22 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     this.$.bind.apply(this.$, arguments)
     return this
   }
+
+  e.unbind = function(){
+    this.$.unbind.apply(this.$, arguments)
+    return this
+  }
+
   
   e.trigger = function(){
     this.$.trigger.apply(this.$, arguments)
     return this
   }
   
+  e.parents = function(){
+    return this.$.parents.apply(this.$, arguments)
+  }
+
   e.find = function(){
     return this.$.find.apply(this.$, arguments)
   }
