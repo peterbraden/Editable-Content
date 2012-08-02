@@ -290,6 +290,7 @@ r.prototype.wrap = function(elem){
     // that case a Range exception will be thrown.
     this.raw.surroundContents($(elem)[0])
   } else if (document.selection){ //IE8-
+    if (!this.raw) throw "No range"
     var frag = $(elem).append(this.raw.htmlText + "")
     this.raw.pasteHTML(frag[0].outerHTML)
   }	  
