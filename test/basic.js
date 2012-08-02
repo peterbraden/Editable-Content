@@ -281,3 +281,10 @@ suite.test(".replace(len,len, text)", function(browser, cb, e){
     cb();
   }))
 })
+
+suite.test("Wrap range of 'dogs'", function(browser, cb, e){
+  browser.eval("window.Ed.wrap(yam.dom.range(window.Ed.$, 51, 55), '<span class="+'"bubble"' + " />').text()" ,c(e, function(e3,o){
+    assert.equal(o, "A cunning _quick_ dark brown _fox_ jumps over the _lazy_ _dogs_ at night");   
+    cb();
+  }))
+})
