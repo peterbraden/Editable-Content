@@ -277,9 +277,9 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
   
   e.selection = function(){
     var sel = dom.selection();
-    if (sel && sel.inside(this.$)){
+    //if (sel && sel.inside(this.$)){ // TODO - can't amke this work in IE
       return sel
-    }
+    //}
   }
 
   /*
