@@ -305,13 +305,14 @@ suite.test("replace contents", function(browser, cb, e){
   }))
 })
 
+/*
 suite.test("get selection coords", function(browser, cb, e){
   browser.eval("yam.dom.selection.caretCoords(window.Ed.$[0]).height" ,c(e, function(e3,o){
     assert.equal(o, 18);   
     cb();
   }))
 })
-
+*/
 
 
 
