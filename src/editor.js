@@ -255,6 +255,8 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
       elem = arguments[2];
       range = this.range(arguments[0], arguments[1])
     }
+    if (!range) throw "No Range for wrap"
+    if (!elem) throw "No Element for wrap"
 
     var cp = this.caretPos()
     range.wrap(elem)
