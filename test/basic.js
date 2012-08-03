@@ -288,3 +288,12 @@ suite.test("Wrap range of 'dogs'", function(browser, cb, e){
     cb();
   }))
 })
+
+
+
+suite.test("get selection", function(browser, cb, e){
+  browser.eval("window.Ed.range(2, 9).select() && window.Ed.selection().toString()" ,c(e, function(e3,o){
+    assert.equal(o, "cunning");   
+    cb();
+  }))
+})
