@@ -323,7 +323,7 @@ r.prototype.insert = function(elem){
     if (typeof elem == 'string'){
      this.raw.text = elem; //preserve leading spaces by setting text
     } else {
-     this.raw.pasteHTML($(elem).html());
+     this.raw.pasteHTML($(elem)[0].outerHTML);
     } 
   }  
 
@@ -551,7 +551,7 @@ s.caretCoords= function(elem){
   range.replaceContents(phantom)
 
   var $phantom = $('.yj-ghost')
-  var pos = $phantom.offset()
+  var pos = $phantom.offset() || {}
   pos.height = $phantom.height() 
   $phantom.remove()
   

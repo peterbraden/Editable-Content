@@ -298,6 +298,12 @@ suite.test("get selection", function(browser, cb, e){
   }))
 })
 
+suite.test("replace contents", function(browser, cb, e){
+  browser.eval("window.Ed.range(2,9).replaceContents($('<span class=" + '"foo"' + ">smart</span>')) ||  window.Ed.text()" ,c(e, function(e3,o){
+    assert.equal(o, "A smart _quick_ dark brown _fox_ jumps over the _lazy_ _dogs_ at night");  
+    cb();
+  }))
+})
 
 suite.test("get selection coords", function(browser, cb, e){
   browser.eval("yam.dom.selection.caretCoords(window.Ed.$[0]).height" ,c(e, function(e3,o){
