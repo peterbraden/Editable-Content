@@ -280,6 +280,7 @@ yam.define(['$', '_', 'yam.dom'], function($,_, dom){
     if (sel && sel.inside(this.$)){
       return sel
     }
+    throw "no selection"
   }
 
   /*
